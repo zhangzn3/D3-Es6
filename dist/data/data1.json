@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "id": "a"
+    },
+    {
+      "id": "b"
+    },
+    {
+      "id": "c"
+    }
+  ],
+  "links": [
+    {
+      "source":"a",
+      "target": "b",
+      "relation":"关系1"
+    },
+    {
+      "source":"c",
+      "target": "b",
+      "relation":"关系2"
+    },
+    {
+      "source":"a",
+      "target": "c",
+      "relation":"关系3"
+    }
+  ]
+}

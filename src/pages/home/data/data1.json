@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "name": "a"
+    },
+    {
+      "name": "b"
+    },
+    {
+      "name": "c"
+    },
+    {
+      "name": "d"
+    },
+    {
+      "name": "e"
+    },
+    {
+      "name": "f"
+    },
+    {
+      "name": "g"
+    },
+    {
+      "name": "h"
+    },
+    {
+      "name": "i"
+    },
+    {
+      "name": "j"
+    }
+  ],
+  "links": [
+    {
+      "source":"a",
+      "target": "b",
+      "relation":"关系1"
+    },
+    {
+      "source":"c",
+      "target": "g",
+      "relation":"关系2"
+    },
+    {
+      "source":"a",
+      "target": "d",
+      "relation":"关系3"
+    },
+    {
+      "source":"b",
+      "target": "d",
+      "relation":"关系4"
+    },
+    {
+      "source":"c",
+      "target": "d",
+      "relation":"关系5"
+    },
+    {
+      "source":"e",
+      "target": "f",
+      "relation":"关系6"
+    },
+    {
+      "source":"h",
+      "target": "i",
+      "relation":"关系7"
+    },
+    {
+      "source":"f",
+      "target": "j",
+      "relation":"关系8"
+    },
+    {
+      "source":"a",
+      "target": "j",
+      "relation":"关系9"
+    },
+    {
+      "source":"f",
+      "target": "i",
+      "relation":"关系10"
+    }
+  ]
+}
