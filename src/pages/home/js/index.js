@@ -70,21 +70,24 @@ function highlightObject(obj){
     }
 }
 
-tp.tooltip.on('mouseover', function () {
-    if (node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-})
-.on('mouseout', function () {
-    if (node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-    node.mouseoutTimeout = setTimeout(function () {
-        tp.highlightToolTip(null);
-    }, 300);
-});
+tp.tooltip.on('dblclick', function () {
+        d3.event.stopPropagation();
+    })
+    .on('mouseover', function () {
+        if (node.mouseoutTimeout) {
+            clearTimeout(node.mouseoutTimeout);
+            node.mouseoutTimeout = null;
+        }
+    })
+    .on('mouseout', function () {
+        if (node.mouseoutTimeout) {
+            clearTimeout(node.mouseoutTimeout);
+            node.mouseoutTimeout = null;
+        }
+        node.mouseoutTimeout = setTimeout(function () {
+            tp.highlightToolTip(null);
+        }, 300);
+    });
 
 node.on('contextmenu', function (d) {
         if (node.mouseoutTimeout) {
@@ -95,8 +98,14 @@ node.on('contextmenu', function (d) {
         d3.event.preventDefault();
         d3.event.stopPropagation();
     })
+    .on('mouseover', function(d) {
+        if (node.mouseoutTimeout) {
+            clearTimeout(node.mouseoutTimeout);
+            node.mouseoutTimeout = null;
+        }
+    })
     .on('mouseout', function () {
-        if (node.node.mouseoutTimeout) {
+        if (node.mouseoutTimeout) {
             clearTimeout(node.mouseoutTimeout);
             node.mouseoutTimeout = null;
         }
