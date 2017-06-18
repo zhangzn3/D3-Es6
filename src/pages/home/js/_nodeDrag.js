@@ -12,7 +12,7 @@ export default function(force,tick,link,node,linetext){
         d.py += d3.event.dy;
         d.x += d3.event.dx;
         d.y += d3.event.dy;
-        tick(link,node,linetext)
+        tick(link,linetext,node)
     };
 
     let dragend=function(d, i) {

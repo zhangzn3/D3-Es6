@@ -20,16 +20,6 @@ exports.default = function (json) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Created by Administrator on 2017/6/17.
- */
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -49,7 +39,7 @@ exports.default = function (json, vis) {
 };
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72,7 +62,7 @@ exports.default = function (json, vis) {
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100,7 +90,7 @@ var _mobile2 = _interopRequireDefault(_mobile);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,7 +100,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-exports.default = function (force, tick, link, node) {
+exports.default = function (force, tick, link, node, linetext) {
     var dragstart = function dragstart(d, i) {
         force.stop();
         d3.event.sourceEvent.stopPropagation();
@@ -120,7 +110,7 @@ exports.default = function (force, tick, link, node) {
         d.py += d3.event.dy;
         d.x += d3.event.dx;
         d.y += d3.event.dy;
-        tick(link, node);
+        tick(link, node, linetext);
     };
 
     var dragend = function dragend(d, i) {
@@ -134,7 +124,7 @@ exports.default = function (force, tick, link, node) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -167,6 +157,38 @@ function tick(link, node, linetext) {
 }
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(d3, $) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (highlightObject) {
+    return {
+        tooltip: d3.select("body").append("div").attr("class", "tooltip").attr("opacity", 0.0),
+        bindMenuEvent: function bindMenuEvent(obj) {
+            //收起当前节点
+            $('.tooltip').off("click").on('click', '.cm-btn.collapseCurNode', function () {
+                highlightObject(obj);
+            });
+        },
+        highlightToolTip: function highlightToolTip(obj) {
+            if (obj) {
+                this.tooltip.html("<div class='title'>编辑</div><table class='detail-info'><tr><td><span class='cm-btn collapseCurNode' >收起当前节点</span></td></tr>" + "<tr><td>菜单选项二</td></tr><tr><td>菜单选项三</td></tr></table>").style("left", d3.event.pageX + 20 + "px").style("top", d3.event.pageY - 20 + "px").style("opacity", 1.0);
+                this.bindMenuEvent(obj);
+            } else {
+                this.tooltip.style("opacity", 0.0);
+            }
+        }
+    };
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(12)))
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -195,6 +217,235 @@ exports.default = function (json) {
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"nodes": [
+		{
+			"name": "a"
+		},
+		{
+			"name": "b"
+		},
+		{
+			"name": "c"
+		},
+		{
+			"name": "d"
+		},
+		{
+			"name": "e"
+		},
+		{
+			"name": "f"
+		},
+		{
+			"name": "g"
+		},
+		{
+			"name": "h"
+		},
+		{
+			"name": "i"
+		},
+		{
+			"name": "j"
+		}
+	],
+	"links": [
+		{
+			"source": "a",
+			"target": "b",
+			"relation": "关系1"
+		},
+		{
+			"source": "c",
+			"target": "g",
+			"relation": "关系2"
+		},
+		{
+			"source": "a",
+			"target": "d",
+			"relation": "关系3"
+		},
+		{
+			"source": "b",
+			"target": "d",
+			"relation": "关系4"
+		},
+		{
+			"source": "c",
+			"target": "d",
+			"relation": "关系5"
+		},
+		{
+			"source": "e",
+			"target": "f",
+			"relation": "关系6"
+		},
+		{
+			"source": "h",
+			"target": "i",
+			"relation": "关系7"
+		},
+		{
+			"source": "f",
+			"target": "j",
+			"relation": "关系8"
+		},
+		{
+			"source": "a",
+			"target": "j",
+			"relation": "关系9"
+		},
+		{
+			"source": "f",
+			"target": "i",
+			"relation": "关系10"
+		}
+	]
+};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(9);
+
+var _d = __webpack_require__(0);
+
+var d3 = _interopRequireWildcard(_d);
+
+var _vis2 = __webpack_require__(8);
+
+var _vis3 = _interopRequireDefault(_vis2);
+
+var _force2 = __webpack_require__(1);
+
+var _force3 = _interopRequireDefault(_force2);
+
+var _link2 = __webpack_require__(3);
+
+var _link3 = _interopRequireDefault(_link2);
+
+var _linetext2 = __webpack_require__(2);
+
+var _linetext3 = _interopRequireDefault(_linetext2);
+
+var _tick2 = __webpack_require__(6);
+
+var _tick3 = _interopRequireDefault(_tick2);
+
+var _tp2 = __webpack_require__(7);
+
+var _tp3 = _interopRequireDefault(_tp2);
+
+var _node2 = __webpack_require__(4);
+
+var _node3 = _interopRequireDefault(_node2);
+
+var _nodeDrag2 = __webpack_require__(5);
+
+var _nodeDrag3 = _interopRequireDefault(_nodeDrag2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+/**
+ * Created by Administrator on 2017/6/3.
+ */
+var json = __webpack_require__(10);
+var dependsNode = [],
+    dependsLinkAndText = [];
+json.links.forEach(function (e) {
+    if (typeof e.source != "number" && typeof e.target != "number") {
+        var sourceNode = json.nodes.filter(function (n) {
+            return n.name === e.source;
+        })[0],
+            targetNode = json.nodes.filter(function (n) {
+            return n.name === e.target;
+        })[0];
+        e.source = sourceNode;
+        e.target = targetNode;
+    }
+});
+var vis = (0, _vis3.default)(json);
+var force = (0, _force3.default)(json);
+var link = (0, _link3.default)(json, vis);
+var linetext = (0, _linetext3.default)(json, vis);
+var node = (0, _node3.default)(json, vis);
+var tp = (0, _tp3.default)(highlightObject);
+var nodeDrag = (0, _nodeDrag3.default)(force, _tick3.default, link, node, linetext);
+force.on("tick", function () {
+    (0, _tick3.default)(link, node, linetext);
+});
+
+function highlightObject(obj) {
+    if (obj) {
+        var objIndex = obj.index;
+        dependsNode = dependsNode.concat([objIndex]);
+        dependsLinkAndText = dependsLinkAndText.concat([objIndex]);
+        node.classed('inactive', function (d) {
+            return dependsNode.indexOf(d.index) > -1;
+        });
+        link.classed('inactive', function (d) {
+            return dependsLinkAndText.indexOf(d.source.index) > -1 || dependsLinkAndText.indexOf(d.target.index) > -1;
+        });
+        linetext.classed('inactive', function (d) {
+            return dependsLinkAndText.indexOf(d.source.index) > -1 || dependsLinkAndText.indexOf(d.target.index) > -1;
+        });
+    } else {
+        node.classed('inactive', false);
+        link.classed('inactive', false);
+        linetext.classed('inactive', false);
+    }
+}
+
+tp.tooltip.on('mouseover', function () {
+    if (node.mouseoutTimeout) {
+        clearTimeout(node.mouseoutTimeout);
+        node.mouseoutTimeout = null;
+    }
+}).on('mouseout', function () {
+    if (node.mouseoutTimeout) {
+        clearTimeout(node.mouseoutTimeout);
+        node.mouseoutTimeout = null;
+    }
+    node.mouseoutTimeout = setTimeout(function () {
+        tp.highlightToolTip(null);
+    }, 300);
+});
+
+node.on('contextmenu', function (d) {
+    if (node.mouseoutTimeout) {
+        clearTimeout(node.mouseoutTimeout);
+        node.mouseoutTimeout = null;
+    }
+    tp.highlightToolTip(d);
+    d3.event.preventDefault();
+    d3.event.stopPropagation();
+}).on('mouseout', function () {
+    if (node.node.mouseoutTimeout) {
+        clearTimeout(node.mouseoutTimeout);
+        node.mouseoutTimeout = null;
+    }
+    node.mouseoutTimeout = setTimeout(function () {
+        tp.highlightToolTip(null);
+    }, 300);
+}).call(nodeDrag);
+
+d3.select("body").on('dblclick', function () {
+    dependsNode = dependsLinkAndText = [];
+    highlightObject(null);
+    force.restart();
+});
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11209,255 +11460,10 @@ return jQuery;
 
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"nodes": [
-		{
-			"name": "a"
-		},
-		{
-			"name": "b"
-		},
-		{
-			"name": "c"
-		},
-		{
-			"name": "d"
-		},
-		{
-			"name": "e"
-		},
-		{
-			"name": "f"
-		},
-		{
-			"name": "g"
-		},
-		{
-			"name": "h"
-		},
-		{
-			"name": "i"
-		},
-		{
-			"name": "j"
-		}
-	],
-	"links": [
-		{
-			"source": "a",
-			"target": "b",
-			"relation": "关系1"
-		},
-		{
-			"source": "c",
-			"target": "g",
-			"relation": "关系2"
-		},
-		{
-			"source": "a",
-			"target": "d",
-			"relation": "关系3"
-		},
-		{
-			"source": "b",
-			"target": "d",
-			"relation": "关系4"
-		},
-		{
-			"source": "c",
-			"target": "d",
-			"relation": "关系5"
-		},
-		{
-			"source": "e",
-			"target": "f",
-			"relation": "关系6"
-		},
-		{
-			"source": "h",
-			"target": "i",
-			"relation": "关系7"
-		},
-		{
-			"source": "f",
-			"target": "j",
-			"relation": "关系8"
-		},
-		{
-			"source": "a",
-			"target": "j",
-			"relation": "关系9"
-		},
-		{
-			"source": "f",
-			"target": "i",
-			"relation": "关系10"
-		}
-	]
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-__webpack_require__(9);
-
-var _d = __webpack_require__(0);
-
-var d3 = _interopRequireWildcard(_d);
-
-var _vis2 = __webpack_require__(8);
-
-var _vis3 = _interopRequireDefault(_vis2);
-
-var _force2 = __webpack_require__(1);
-
-var _force3 = _interopRequireDefault(_force2);
-
-var _link2 = __webpack_require__(4);
-
-var _link3 = _interopRequireDefault(_link2);
-
-var _linetext2 = __webpack_require__(3);
-
-var _linetext3 = _interopRequireDefault(_linetext2);
-
-var _tick2 = __webpack_require__(7);
-
-var _tick3 = _interopRequireDefault(_tick2);
-
-var _node2 = __webpack_require__(5);
-
-var _node3 = _interopRequireDefault(_node2);
-
-var _highlightToolTip2 = __webpack_require__(2);
-
-var _highlightToolTip3 = _interopRequireDefault(_highlightToolTip2);
-
-var _nodeDrag2 = __webpack_require__(6);
-
-var _nodeDrag3 = _interopRequireDefault(_nodeDrag2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-/**
- * Created by Administrator on 2017/6/3.
- */
-var json = __webpack_require__(11);
-json.links.forEach(function (e) {
-    if (typeof e.source != "number" && typeof e.target != "number") {
-        var sourceNode = json.nodes.filter(function (n) {
-            return n.name === e.source;
-        })[0],
-            targetNode = json.nodes.filter(function (n) {
-            return n.name === e.target;
-        })[0];
-        e.source = sourceNode;
-        e.target = targetNode;
-    }
-});
-var highlighted = null,
-    dependsNode = [],
-    dependsLinkAndText = [];
-function bindMenuEvent(obj) {
-    //收起当前节点
-    $('.tooltip').off("click").on('click', '.cm-btn.collapseCurNode', function () {
-        highlightObject(obj);
-    });
-}
-function highlightToolTip(obj) {
-    if (obj) {
-        tooltip.html("<div class='title'>编辑</div><table class='detail-info'><tr><td><span class='cm-btn collapseCurNode' >收起当前节点</span></td></tr>" + "<tr><td>菜单选项二</td></tr><tr><td>菜单选项三</td></tr></table>").style("left", d3.event.pageX + 20 + "px").style("top", d3.event.pageY - 20 + "px").style("opacity", 1.0);
-        bindMenuEvent(obj);
-    } else {
-        tooltip.style("opacity", 0.0);
-    }
-}
-function highlightObject(obj) {
-    if (obj) {
-        var objIndex = obj.index;
-        console.info("objIndex--->", objIndex);
-        dependsNode = dependsNode.concat([objIndex]);
-        dependsLinkAndText = dependsLinkAndText.concat([objIndex]);
-        node.classed('inactive', function (d) {
-            return dependsNode.indexOf(d.index) > -1;
-        });
-        link.classed('inactive', function (d) {
-            return dependsLinkAndText.indexOf(d.source.index) > -1 || dependsLinkAndText.indexOf(d.target.index) > -1;
-        });
-        linetext.classed('inactive', function (d) {
-            return dependsLinkAndText.indexOf(d.source.index) > -1 || dependsLinkAndText.indexOf(d.target.index) > -1;
-        });
-    } else {
-        node.classed('inactive', false);
-        link.classed('inactive', false);
-        linetext.classed('inactive', false);
-    }
-}
-
-var vis = (0, _vis3.default)(json);
-var force = (0, _force3.default)(json);
-var link = (0, _link3.default)(json, vis);
-var linetext = (0, _linetext3.default)(json, vis);
-var node = (0, _node3.default)(json, vis);
-var nodeDrag = (0, _nodeDrag3.default)(force, _tick3.default, link, node);
-var tooltip = d3.select("body").append("div").attr("class", "tooltip").attr("opacity", 0.0).on('dblclick', function () {
-    d3.event.stopPropagation();
-}).on('mouseover', function () {
-    if (node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-}).on('mouseout', function () {
-    if (node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-    node.mouseoutTimeout = setTimeout(function () {
-        highlightToolTip(null);
-    }, 300);
-});
-force.on("tick", function () {
-    (0, _tick3.default)(link, node, linetext);
-});
-node.on('contextmenu', function (d) {
-    if (node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-    highlightToolTip(d);
-    d3.event.preventDefault();
-    d3.event.stopPropagation();
-}).on('mouseout', function () {
-    if (node.node.mouseoutTimeout) {
-        clearTimeout(node.mouseoutTimeout);
-        node.mouseoutTimeout = null;
-    }
-    node.mouseoutTimeout = setTimeout(function () {
-        highlightToolTip(null);
-    }, 300);
-}).call(nodeDrag);
-
-d3.select("body").on('dblclick', function () {
-    dependsNode = dependsLinkAndText = [];
-    highlightObject(null);
-    force.restart();
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAADYklEQVRYR9WZz24SURTGvzMYoBvFxJ2L0kRXXRSHByjdGMGF+gSlbjWR7gAXpRto3LRNXJqUPoG6YRoTU/oAjNSkG2NSmrg0kbppITLH3KFDgM6fO5RQOhtCmHvO737nnnvPPRBGfGL5L7EAjEWwkQAoAkJiwBSjCnATpFQ7UA7qxcf1UVyRn0GxrBZVFCyDkSZC1M9YZjRAKBsGdusbyYbsWCnAWGE/orTO1ogoI2vY7T1m3jJCM+v1wlLTy54nYDxXec6EHRJhHOPD4CYxVmql1Cc3s66Aaq6yOS7VnCCEmnopter0uy2gGdL2+SYB6TGK5miKgbIRDK/ahdwWUM1rO5OCs6gFpF5MrgzP4hKgmq9sEeiN+yLHobmF+HooQoQFV7vgbb2YGkjEAUCRECD66GakY2CpvpGs+mK7eDmW1RIBBfuuY5lf9CdOD7C77s6O3bKVbWZoOVOzlddQ6J753eDf+kbqvR2IV4REdhvBmTlrPfYAvQaazi5mt/D2633qtB/6UdEw+Of3d6lfMlHqF8IElFFPvGeFV83vvSKwrULO0JSpFZ9sS4VZ+AqG7woVTUA1rxUIWPNSZJKADKzrxaTgAtScdixztk4UkNHQS8k56lYlnW9e6k06xKY/BB6RmqtkiGhzGgGZeZXieU0c1s+mERDAZ6FglYgWpxGQmQ9IzVf+yJZSk0wSSzARYpZR7zqSRPi8AYA5rQnCHRkVryXEU58k8ZxWBmF5ShU0t5np3qin/qjrVjOVBoFmvcI8ySRh8IleTEVvRrklCtZA61y0Jly3G0vBq1TUUgUr47QTCkd7Bat00Tp0oRleEvGc9oHBil5KvXRaLnIlf7dYNU8Sy5CMim6XpvnCUTDUOvkr7LVCs7ePCvPtUS5N6FNvAFB8kZzdil5Mlm2dZ/cedKijHJae/rCH09IE7Lgmo9O10xokdbsD18Hk7+JOHAEo5gZnFyHb1oef08Vra5L+nbFbKyUv9YIcu1sThXSAu7QGh2crF25pjWxfdEs8T0ArcZggGkqeJ40vVMYpwOkrNTD7tyClfZ4hRsZrM/eEZJyKCRvB8NZYWsD9Di8amxkxc7+KirMVINGolAKz/Hr2qJ0UEVWQwv8SBIoxOCo+e+oKlcB1AjXEp0G3qqP+DfEfLRtyB8oAdpsAAAAASUVORK5CYII="
 
 /***/ })
-],[12]);
+],[11]);
