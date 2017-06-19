@@ -2,20 +2,20 @@
     padding: 0;
     margin: 0
 }
-.nodetext {
+.ge .nodetext {
     pointer-events: none;
     font: 12px sans-serif;
 }
-.linetext {
+.ge .linetext {
     font-size: 12px;
 }
-.link.inactive,
-.linetext.inactive,
-.node.inactive image,
-.node.inactive text {
+.ge .link.inactive,
+.ge .linetext.inactive,
+.ge .node.inactive image,
+.ge .node.inactive text {
     opacity: 0;
 }
-.tooltip {
+.ge .tooltip {
     font-family: "microsoft yahei", "simsun";
     font-size: 12px;
     width: 170px;
@@ -27,34 +27,34 @@
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
-.tooltip .title {
+.ge .tooltip .title {
     color: #fff;
     padding: 5px;
     font-size: 14px;
     background-color: #337ab7;
     border-radius: 5px 5px 0 0;
 }
-.tooltip .detail-info {
+.ge .tooltip .detail-info {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #337ab7;
 }
-.tooltip .detail-info td {
+.ge .tooltip .detail-info td {
     padding: 3px 5px;
     color: #666;
     vertical-align: middle;
 }
-.tooltip .detail-info tr:nth-of-type(odd) {
+.ge .tooltip .detail-info tr:nth-of-type(odd) {
     background: #f9f9f9;
 }
-.tooltip .detail-info td.td-label {
+.ge .tooltip .detail-info td.td-label {
     color: #333;
     width:42px;
 }
-.tooltip .detail-info td a {
+.ge .tooltip .detail-info td a {
     color: #666
 }
-.tooltip .cm-btn{cursor:pointer;}
-.tooltip .cm-btn:hover{color:#337ab7}
-.add-node-dialog td{height:40px}
-.add-node-dialog .td-til{text-align:right; padding-right:10px; font-size:14px; color:#333}
+.ge .tooltip .cm-btn{cursor:pointer;}
+.ge .tooltip .cm-btn:hover{color:#337ab7}
+.ge .add-node-dialog td{height:40px}
+.ge .add-node-dialog .td-til{text-align:right; padding-right:10px; font-size:14px; color:#333}
