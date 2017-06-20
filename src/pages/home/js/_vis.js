@@ -1,12 +1,11 @@
 
-export default function (json){
+export default function (){
     let zoom = d3.zoom().scaleExtent([0.2,10]).on("zoom",()=>{_vis.attr("transform", d3.event.transform)});
     let _vis=d3.select("body").append("svg:svg")
     .attr("width", window.innerWidth)
     .attr("height", window.innerHeight)
     .call(zoom).on("dblclick.zoom", null)
-    .append('g').attr('class','all');
-
+    .append('g').attr('class','all')/*.attr("transform", "translate(" + window.innerWidth / 2 + "," + window.innerHeight / 2 + ")")*/
     _vis.append("svg:defs").selectAll("marker")
         .data(["end"])
         .enter().append("svg:marker")

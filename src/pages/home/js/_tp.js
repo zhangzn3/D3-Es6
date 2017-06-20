@@ -10,6 +10,8 @@ export default function(highlightObject){
         bindMenuEvent(obj){
             //收起当前节点
             $('.tooltip').off("click").on('click', '.cm-btn.collapseCurNode', function () {
+                alert(2222)
+                console.info(obj)
                 highlightObject(obj);
             })
         },

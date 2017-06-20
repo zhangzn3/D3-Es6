@@ -1,12 +1,11 @@
 /**
  * Created by Administrator on 2017/5/27.
  */
-
 export default function(json,vis){
-    return vis.selectAll("line.link")
-        .data(json.links)
-        .enter().append("svg:path")
-        .attr("class", "link")
+    let _link=vis.selectAll("path.link");
+    _link=_link.data(json.links,(d)=>(`${d.source.name}_${d.target.name}`));
+    _link.exit().remove();
+    _link=_link.enter().append("svg:path").attr("class", "link")
         .attr('stroke-width',1)
         .attr('id', function (d) {
             return d.source.index + '_' + d.target.index
@@ -19,5 +18,6 @@ export default function(json,vis){
             }
         })
         .attr('stroke','#18a1cf')
-        .attr('fill','none')
+        .attr('fill','none');
+    return _link;
 }

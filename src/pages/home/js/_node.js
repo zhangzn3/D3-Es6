@@ -3,9 +3,10 @@
  */
 import icon from '../../../images/mobile.png';
 export default function(json,vis){
-    let _node=vis.selectAll('g.node')
-        .data(json.nodes).enter().append("svg:g")
-        .attr("class", "node");
+    let _node=vis.selectAll('g.node');
+    _node=_node.data(json.nodes,(d)=>(d.name));
+    _node.exit().remove();
+    _node=_node.enter().append("svg:g").attr("class", "node")
 
     _node.append("svg:image")
         .attr("class", "circle")
@@ -13,7 +14,7 @@ export default function(json,vis){
         .attr("x", "-15px")
         .attr("y", "-15px")
         .attr("width", "30px")
-        .attr("height", "30px");
+        .attr("height", "30px")
 
     _node.append("svg:text")
         .attr("class", "nodetext")
@@ -23,3 +24,4 @@ export default function(json,vis){
 
     return _node
 }
+
