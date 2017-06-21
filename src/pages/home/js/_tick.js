@@ -10,7 +10,7 @@ const arcPath=function(leftHand, d) {
 }
 export default function tick(link,linetext,node){
     //连接线显示的位置
-    link.attr("d",(d)=>(arcPath(false, d)));
+    link.attr("d",(d)=>(arcPath(true, d)));
     //关系文字显示的位置
     linetext.attr("d",(d)=>(arcPath(d.source.x < d.target.x, d)));
     //节点显示的位置
