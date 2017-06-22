@@ -4,7 +4,7 @@
 
 export default function(json,dialog,update){
     //删除节点和相关联的边
-    $(document).on('click','#J_DelNode',function(){
+    $('#J_DelNode').off().on('click',function(){
         let dialogTpl=`
                      <table class="op-dialog del-node-dialog">
                          <tr>
@@ -37,7 +37,7 @@ export default function(json,dialog,update){
                                 i--;
                             }
                         }
-                        update();
+                        update()
                     }else{
                         var d = dialog({
                             content: '没有查找到该节点！'
@@ -51,10 +51,10 @@ export default function(json,dialog,update){
             },
             cancel: function () {}
         });
-        d.show();
+        d.showModal();
     });
-    //增加点和边
-    $(document).on('click','#J_AddNode',function(){
+    //增加点
+    $('#J_AddNode').off().on('click',function(){
         let dialogTpl=`
              <table class="op-dialog add-node-dialog">
                  <tr>
@@ -75,12 +75,92 @@ export default function(json,dialog,update){
             ok: function () {
                 let iptNodeName=$('.add-node-dialog').find('.node-name').val();
                 if(!!iptNodeName){
-                    json.nodes.push({'name':iptNodeName});
-                    update();
+                    if(!(json.nodes.findIndex((item)=>($.trim(item.name.toLowerCase())==$.trim(iptNodeName.toLowerCase())))>-1)){
+                        json.nodes.push({'name':iptNodeName});
+                        update()
+                    }else{
+                        var d = dialog({
+                            content: '已经有该节点，重复了！'
+                        });
+                        d.show();
+                        setTimeout(function () {
+                            d.close().remove();
+                        }, 2000);
+                    }
                 }
             },
             cancel: function () {}
         });
-        d.show();
+        d.showModal();
+    });
+    //添加连接线和关系
+    $('#J_AddLR').off().on('click',function(){
+        let dialogTpl=`
+             <table class="op-dialog add-node-dialog">
+                 <tr>
+                     <td class="td-til" >
+                      <span>开始点的名称</span>
+                     </td>
+                     <td>
+                       <input type="text" name="node-source-name" class="node-source-name" value="" />
+                     </td>
+                 </tr>
+                  <tr>
+                     <td class="td-til" >
+                      <span>结束点的名称</span>
+                     </td>
+                     <td>
+                       <input type="text" name="node-target-name" class="node-target-name" value="" />
+                     </td>
+                 </tr>
+                 <tr>
+                     <td class="td-til" >
+                      <span>连接线的关系</span>
+                     </td>
+                     <td>
+                       <input type="text" name="linetext-name" class="linetext-name" value="" />
+                     </td>
+                 </tr>
+             </table>
+            `;
+        var d = dialog({
+            title: '添加连接线和关系',
+            content: dialogTpl,
+            okValue: '确定',
+            cancelValue: '取消',
+            ok: function () {
+                let iptNodeSourceName=$('.add-node-dialog').find('.node-source-name').val();
+                let iptNodeTargteName=$('.add-node-dialog').find('.node-target-name').val();
+                let iptLineTextName=$('.add-node-dialog').find('.linetext-name').val();
+                console.info($('.add-node-dialog'),iptNodeTargteName,iptLineTextName)
+                if(!!iptNodeSourceName&&!!iptNodeTargteName&&!!iptLineTextName){
+                    let sourceNode=json.nodes.filter((item)=>{
+                        return item.name==iptNodeSourceName
+                    })[0];
+                    let targetNode=json.nodes.filter((item)=>{
+                        return item.name==iptNodeTargteName
+                    })[0];
+                    json.links.push(
+                        {
+                            "source":sourceNode,
+                            "target":targetNode,
+                            "relation":iptLineTextName
+                        }
+                    );
+
+                }else{
+                    var d = dialog({
+                        content: '不能为空！'
+                    });
+                    d.show();
+                    setTimeout(function () {
+                        d.close().remove();
+                    }, 2000);
+                    return false
+                }
+            },
+            cancel: function () {}
+        });
+        d.showModal();
     });
 }
