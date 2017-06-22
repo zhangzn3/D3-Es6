@@ -3,8 +3,8 @@
  */
 
 export default function(json){
-    return d3.forceSimulation(json.nodes)
-        .force("link", d3.forceLink(json.links).distance(100))
+    return d3.forceSimulation([])
+        .force("link", d3.forceLink([]).id((d)=>(d.name)).distance(100))
         .force("charge", d3.forceManyBody().strength(-1000))
         .force("center", d3.forceCenter( window.innerWidth / 2,  window.innerHeight / 2))
         .force("x", d3.forceX())
