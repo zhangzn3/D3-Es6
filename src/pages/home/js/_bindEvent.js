@@ -4,7 +4,7 @@
 
 export default function(json,dialog,update,svg2Png){
     //删除节点和相关联的边
-    $('#J_DelNode').off().on('click',function(){
+    $('#J_DelNode').off().on('click',()=>{
         let dialogTpl=`
                      <table class="op-dialog del-node-dialog">
                          <tr>
@@ -37,7 +37,7 @@ export default function(json,dialog,update,svg2Png){
                                 i--;
                             }
                         }
-                        update()
+                        update(json)
                     }else{
                         var d = dialog({
                             content: '没有查找到该节点！'
@@ -54,7 +54,7 @@ export default function(json,dialog,update,svg2Png){
         d.showModal();
     });
     //增加点
-    $('#J_AddNode').off().on('click',function(){
+    $('#J_AddNode').off().on('click',()=>{
         let dialogTpl=`
              <table class="op-dialog add-node-dialog">
                  <tr>
@@ -77,7 +77,7 @@ export default function(json,dialog,update,svg2Png){
                 if(!!iptNodeName){
                     if(!(json.nodes.findIndex((item)=>($.trim(item.name.toLowerCase())==$.trim(iptNodeName.toLowerCase())))>-1)){
                         json.nodes.push({'name':iptNodeName});
-                        update()
+                        update(json)
                     }else{
                         var d = dialog({
                             content: '已经有该节点，重复了！'
@@ -94,9 +94,9 @@ export default function(json,dialog,update,svg2Png){
         d.showModal();
     });
     //添加连接线和关系
-    $('#J_AddLR').off().on('click',function(){
+    $('#J_AddLR').off().on('click',()=>{
         let dialogTpl=`
-             <table class="op-dialog add-node-dialog">
+             <table class="op-dialog add-link-dialog">
                  <tr>
                      <td class="td-til" >
                       <span>开始点的名称</span>
@@ -129,26 +129,30 @@ export default function(json,dialog,update,svg2Png){
             okValue: '确定',
             cancelValue: '取消',
             ok: function () {
-                let iptNodeSourceName=$('.add-node-dialog').find('.node-source-name').val();
-                let iptNodeTargteName=$('.add-node-dialog').find('.node-target-name').val();
-                let iptLineTextName=$('.add-node-dialog').find('.linetext-name').val();
-                console.info($('.add-node-dialog'),iptNodeTargteName,iptLineTextName)
+                let addLinkDialog=$('.add-link-dialog');
+                let iptNodeSourceName=addLinkDialog.find('.node-source-name').val();
+                let iptNodeTargteName=addLinkDialog.find('.node-target-name').val();
+                let iptLineTextName=addLinkDialog.find('.linetext-name').val();
+                let hasLinks=json.links.findIndex((item)=>{
+                     return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargteName?false:true
+                });
                 if(!!iptNodeSourceName&&!!iptNodeTargteName&&!!iptLineTextName){
-                    let sourceNode=json.nodes.filter((item)=>{
-                        return item.name==iptNodeSourceName
-                    })[0];
-                    let targetNode=json.nodes.filter((item)=>{
-                        return item.name==iptNodeTargteName
-                    })[0];
-                    json.links.push(
-                        {
-                            "source":sourceNode,
-                            "target":targetNode,
-                            "relation":iptLineTextName
-                        }
-                    );
-                    update()
-
+                    if(hasLinks<=0){
+                        let sourceNode=json.nodes.filter((item)=>{
+                            return item.name===iptNodeSourceName
+                        })[0];
+                        let targetNode=json.nodes.filter((item)=>{
+                            return item.name===iptNodeTargteName
+                        })[0];
+                        json.links.push(
+                            {
+                                "source":sourceNode,
+                                "target":targetNode,
+                                "relation":iptLineTextName
+                            }
+                        );
+                        update(json)
+                    }
                 }else{
                     var d = dialog({
                         content: '不能为空！'
@@ -168,6 +172,5 @@ export default function(json,dialog,update,svg2Png){
     $('#J_SvgToPng').on('click',()=>{
         svg2Png.saveSvgAsPng(document.getElementById("svgView"), "svg2Png.png")
     });
-
 
 }

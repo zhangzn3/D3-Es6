@@ -22,6 +22,7 @@ let force=_force(json);
 let bindEvent=_bindEvent(json,dialog,update,svg2Png);
 let node,link,linetext,tp,nodeDrag,tick,dependsNode=[],dependsLinkAndText=[];
 
+
 //收起
 function highlightObject(obj){
     let allNode=vis.selectAll('.node'),allLink=vis.selectAll('.link'),allLineText=vis.selectAll('.linetext');
@@ -46,13 +47,13 @@ function highlightObject(obj){
 }
 
 //填充数据和绑定节点的事件
-function update(){
+function update(json){
     //转换数据
     force.nodes(json.nodes);
     force.force("link").links(json.links);
 
     link=_link(json,vis);
-    node=_node(json,vis,node);
+    node=_node(json,vis);
     linetext=_linetext(json,vis);
     nodeDrag=_nodeDrag(force,_tick,link,node,linetext);
     tp=_tp(highlightObject);
@@ -98,11 +99,11 @@ function update(){
                 tp.highlightToolTip(null);
             }, 300);
         })
-        .call(nodeDrag);
+        .call(_nodeDrag(force,_tick,link,node,linetext));
 
     force.restart();
 }
-update();
+update(json);
 
 //更新坐标函数
 force.on("tick",function(){

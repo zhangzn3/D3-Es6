@@ -51,12 +51,12 @@ module.exports={
         }),
         new ExtractTextPlugin("css/style.css"),//单独使用link标签加载css并设置路径，相对于output配置中的publickPath
         new webpack.HotModuleReplacementPlugin(), //热加载
-        new webpack.optimize.CommonsChunkPlugin({
+/*        new webpack.optimize.CommonsChunkPlugin({
             name: "lib",// 将公共模块提取，生成名为`common`的chunk
             chunks:["lib","home"],//提取哪些模块共有的部分，默认所有
             //filename: "js/common.js",
             //minChunks: 2 // 提取至少2个模块共有的部分
-        }),
+        }),*/
         //压缩代码 编译的速度会变慢,生产时用
 /*        new uglifyJsPlugin({
             compress: {

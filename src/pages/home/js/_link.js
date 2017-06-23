@@ -5,7 +5,7 @@ export default function(json,vis){
     let _link=vis.selectAll("path.link");
     _link=_link.data(json.links,(d)=>(`${d.source.name}_${d.target.name}`));
     _link.exit().remove();
-    _link=_link.enter().append("svg:path").attr("class", "link")
+    _link=_link.enter().append("svg:path").attr("class", "link").merge(_link)
         .attr('stroke-width',1)
         .attr('id', function (d) {
             return d.source.index + '_' + d.target.index

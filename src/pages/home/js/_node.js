@@ -6,7 +6,7 @@ export default function(json,vis){
     let _node=vis.selectAll('g.node');
     _node=_node.data(json.nodes,(d)=>(d.name));
     _node.exit().remove();
-    _node=_node.enter().append("svg:g").attr("class", "node")
+    _node=_node.enter().append("svg:g").attr("class", "node").merge(_node)
 
     _node.append("svg:image")
         .attr("class", "circle")
