@@ -23,6 +23,8 @@
   },
   "dependencies": {
     "d3": "^4.9.1",
-    "jquery": "^1.11.3"
+    "jquery": "^1.11.3",
+    "save-svg-as-png": "^1.2.0",
+    "underscore": "^1.8.3"
   }
 }

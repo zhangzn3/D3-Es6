@@ -46,7 +46,8 @@ module.exports={
             jQuery: "jquery",
             "window.jQuery": "jquery",
             "d3":"d3",
-
+            "_":"underscore",
+            "out$":"save-svg-as-png"
         }),
         new ExtractTextPlugin("css/style.css"),//单独使用link标签加载css并设置路径，相对于output配置中的publickPath
         new webpack.HotModuleReplacementPlugin(), //热加载

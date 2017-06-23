@@ -2,7 +2,7 @@
  * Created by Administrator on 2017/6/20.
  */
 
-export default function(json,dialog,update){
+export default function(json,dialog,update,svg2Png){
     //删除节点和相关联的边
     $('#J_DelNode').off().on('click',function(){
         let dialogTpl=`
@@ -147,6 +147,7 @@ export default function(json,dialog,update){
                             "relation":iptLineTextName
                         }
                     );
+                    update()
 
                 }else{
                     var d = dialog({
@@ -163,4 +164,10 @@ export default function(json,dialog,update){
         });
         d.showModal();
     });
+    //导出png图片
+    $('#J_SvgToPng').on('click',()=>{
+        svg2Png.saveSvgAsPng(document.getElementById("svgView"), "svg2Png.png")
+    });
+
+
 }

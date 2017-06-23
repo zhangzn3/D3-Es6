@@ -3,6 +3,7 @@
  */
 import '../../../css/index.css'; //引入全局样式
 import * as d3 from 'd3'; //引入D3
+import svg2Png from 'save-svg-as-png'; //引入svg转png模块
 import dialog from 'art-dialog';//引入art-dialog
 import _vis from './_vis.js'; //引入容器模块
 import _force from './_force.js';//引入力导向模块
@@ -15,24 +16,12 @@ import _bindEvent from './_bindEvent.js';//工具栏操作
 import _tick from './_tick.js';//引入更新坐标模块
 let json=require('../data/data1.json');//获取数据
 
-//数据源和目标指向更改
-/*json.links.forEach(function (e) {
-    if(typeof e.source!="number"&&typeof e.target!="number"){
-        var sourceNode = json.nodes.filter(function (n) {
-                return n.name === e.source;
-            })[0],
-            targetNode = json.nodes.filter(function (n) {
-                return n.name === e.target;
-            })[0];
-        e.source = sourceNode;
-        e.target = targetNode;
-    }
-});*/
+
 
 //获取各模块返回值
 let vis=_vis();
 let force=_force(json);
-let bindEvent=_bindEvent(json,dialog,update);
+let bindEvent=_bindEvent(json,dialog,update,svg2Png);
 let node,link,linetext,tp,nodeDrag,tick,dependsNode=[],dependsLinkAndText=[];
 
 //收起

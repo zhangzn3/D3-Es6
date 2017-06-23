@@ -1,12 +1,15 @@
 {
   "nodes": [
     {
+      "id":1,
       "name": "a"
     },
     {
+      "id":2,
       "name": "b"
     },
     {
+      "id":3,
       "name": "c"
     }
   ],
@@ -20,11 +23,6 @@
       "source":"c",
       "target": "b",
       "relation":"关系2"
-    },
-    {
-      "source":"a",
-      "target": "c",
-      "relation":"关系3"
     }
   ]
 }
