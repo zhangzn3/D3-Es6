@@ -123,6 +123,7 @@ export default function(json,dialog,update,svg2Png){
                  </tr>
              </table>
             `;
+
         var d = dialog({
             title: '添加连接线和关系',
             content: dialogTpl,
@@ -133,11 +134,16 @@ export default function(json,dialog,update,svg2Png){
                 let iptNodeSourceName=addLinkDialog.find('.node-source-name').val();
                 let iptNodeTargteName=addLinkDialog.find('.node-target-name').val();
                 let iptLineTextName=addLinkDialog.find('.linetext-name').val();
-                let hasLinks=json.links.findIndex((item)=>{
-                     return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargteName?false:true
+                let alreadyLinking=json.links.findIndex((item)=>{
+                     return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargteName
                 });
+                function hasNodes(key){
+                    return json.nodes.findIndex((item)=>{
+                        return item.name===key
+                    })
+                }
                 if(!!iptNodeSourceName&&!!iptNodeTargteName&&!!iptLineTextName){
-                    if(hasLinks<0){
+                    if(alreadyLinking<0&&hasNodes(iptNodeSourceName)>-1&& hasNodes(iptNodeTargteName)>-1){
                         let sourceNode=json.nodes.filter((item)=>{
                             return item.name===iptNodeSourceName
                         })[0];
@@ -152,6 +158,15 @@ export default function(json,dialog,update,svg2Png){
                             }
                         );
                         update(json)
+                    }else{
+                        var d = dialog({
+                            content: '已经有连线或者没有这些节点！'
+                        });
+                        d.show();
+                        setTimeout(function () {
+                            d.close().remove();
+                        }, 2000);
+                        return false
                     }
                 }else{
                     var d = dialog({
