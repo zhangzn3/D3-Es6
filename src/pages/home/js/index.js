@@ -20,8 +20,7 @@ let json=require('../data/data1.json');//获取数据
 let vis=_vis();
 let force=_force(json);
 let bindEvent=_bindEvent(json,dialog,update,svg2Png);
-let node,link,linetext,tp,nodeDrag,tick,dependsNode=[],dependsLinkAndText=[];
-
+let dependsNode=[],dependsLinkAndText=[];
 
 //收起
 function highlightObject(obj){
@@ -52,11 +51,11 @@ function update(json){
     force.nodes(json.nodes);
     force.force("link").links(json.links);
 
-    link=_link(json,vis);
-    node=_node(json,vis);
-    linetext=_linetext(json,vis);
-    nodeDrag=_nodeDrag(force,_tick,link,node,linetext);
-    tp=_tp(highlightObject);
+    let link=_link(json,vis);
+    let node=_node(json,vis);
+    let linetext=_linetext(json,vis);
+    let nodeDrag=_nodeDrag(force,_tick,link,node,linetext);
+    let tp=_tp(highlightObject);
     tp.tooltip.on('dblclick', function () {
             d3.event.stopPropagation();
         })
@@ -101,14 +100,14 @@ function update(json){
         })
         .call(_nodeDrag(force,_tick,link,node,linetext));
 
+    //更新坐标函数
+    force.on("tick",function(){
+        _tick(link,linetext,node);
+    });
+
     force.restart();
 }
 update(json);
-
-//更新坐标函数
-force.on("tick",function(){
-   _tick(link,linetext,node);
-});
 
 //双击页面
 d3.select("body").on('dblclick', function () {
