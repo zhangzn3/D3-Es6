@@ -16,8 +16,6 @@ import _bindEvent from './_bindEvent.js';//工具栏操作
 import _tick from './_tick.js';//引入更新坐标模块
 let json=require('../data/data1.json');//获取数据
 
-
-
 //获取各模块返回值
 let vis=_vis();
 let force=_force(json);
@@ -49,6 +47,10 @@ function highlightObject(obj){
 
 //填充数据和绑定节点的事件
 function update(){
+    //转换数据
+    force.nodes(json.nodes);
+    force.force("link").links(json.links);
+
     link=_link(json,vis);
     node=_node(json,vis,node);
     linetext=_linetext(json,vis);
@@ -97,9 +99,7 @@ function update(){
             }, 300);
         })
         .call(nodeDrag);
-    //重新转换
-    force.nodes(json.nodes);
-    force.force("link").links(json.links);
+
     force.restart();
 }
 update();
