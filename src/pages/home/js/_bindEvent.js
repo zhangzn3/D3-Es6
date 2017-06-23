@@ -137,7 +137,7 @@ export default function(json,dialog,update,svg2Png){
                      return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargteName?false:true
                 });
                 if(!!iptNodeSourceName&&!!iptNodeTargteName&&!!iptLineTextName){
-                    if(hasLinks<=0){
+                    if(hasLinks<0){
                         let sourceNode=json.nodes.filter((item)=>{
                             return item.name===iptNodeSourceName
                         })[0];
