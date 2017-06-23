@@ -20,6 +20,7 @@ let json=require('../data/data1.json');//获取数据
 let vis=_vis();
 let force=_force(json);
 let bindEvent=_bindEvent(json,dialog,update,svg2Png);
+let tooltip=d3.select("body").append("div").attr("class", "tooltip").attr("opacity", 0.0);
 let dependsNode=[],dependsLinkAndText=[];
 
 //收起
@@ -54,9 +55,8 @@ function update(json){
     let link=_link(json,vis);
     let node=_node(json,vis);
     let linetext=_linetext(json,vis);
-    let nodeDrag=_nodeDrag(force,_tick,link,node,linetext);
-    let tp=_tp(highlightObject);
-    tp.tooltip.on('dblclick', function () {
+    let tp=_tp(highlightObject,tooltip);
+    tooltip.on('dblclick', function () {
             d3.event.stopPropagation();
         })
         .on('mouseover', function () {

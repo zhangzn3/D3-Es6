@@ -7,16 +7,9 @@ export default function(json,vis){
     _link.exit().remove();
     _link=_link.enter().append("svg:path").attr("class", "link").merge(_link)
         .attr('stroke-width',1)
-        .attr('id', function (d) {
-            return d.source.index + '_' + d.target.index
-        })
-        .attr('marker-end', function (d) {
-            if (d.source.index == d.target.index) {
-                return false; //不应该有指向自己的关系 异常处理
-            } else {
-                return "url(#arrow)"
-            }
-        })
+        .attr('id',(d)=>(d.source.index + '_' + d.target.index))
+        //不应该有指向自己的关系 异常处理
+        .attr('marker-end',(d)=>(d.source.index === d.target.index?false:"url(#arrow)"))
         .attr('stroke','#18a1cf')
         .attr('fill','none');
     return _link;
