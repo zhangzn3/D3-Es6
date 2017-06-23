@@ -4,7 +4,6 @@
 export default function(highlightObject,tooltip){
     return {
         bindMenuEvent(obj){
-            //收起当前节点
             $('.tooltip').off().on('click', '.cm-btn.collapseCurNode',()=>{ highlightObject(obj);})
         },
         highlightToolTip(obj){
