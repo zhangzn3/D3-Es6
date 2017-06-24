@@ -27,7 +27,7 @@ let dependsNode=[],dependsLinkAndText=[];
 function highlightObject(obj){
     let allNode=vis.selectAll('.node'),allLink=vis.selectAll('.link'),allLineText=vis.selectAll('.linetext');
     if (obj) {
-        var objIndex= obj.index;
+        let objIndex= obj.index;
         dependsNode=dependsNode.concat([objIndex]);
         dependsLinkAndText=dependsLinkAndText.concat([objIndex]);
         allNode.classed('inactive',function(d){
