@@ -1,10 +1,9 @@
 /**
  * Created by Administrator on 2017/6/20.
  */
-
 export default function(json,dialog,update,svg2Png){
     //删除节点和相关联的边
-    $('#J_DelNode').off().on('click',()=>{
+    d3.select('#J_DelNode').on('click',()=>{
         let dialogTpl=`
                      <table class="op-dialog del-node-dialog">
                          <tr>
@@ -17,12 +16,12 @@ export default function(json,dialog,update,svg2Png){
                          </tr>
                      </table>
                     `;
-        var d = dialog({
+        let d = dialog({
             title: '删除节点和关联的边',
             content: dialogTpl,
             okValue: '确定',
             cancelValue: '取消',
-            ok: function () {
+            ok() {
                 let iptNodeName=$('.del-node-dialog').find('.node-name').val();
                 if(!!iptNodeName){
                     //获取节点索引
@@ -39,22 +38,15 @@ export default function(json,dialog,update,svg2Png){
                         }
                         update(json)
                     }else{
-                        var d = dialog({
-                            content: '没有查找到该节点！'
-                        });
-                        d.show();
-                        setTimeout(function () {
-                            d.close().remove();
-                        }, 2000);
+                        let d = dialog({content: '没有查找到该节点！'}).show();
+                        setTimeout(()=>{d.close().remove()}, 2000);
                     }
                 }
-            },
-            cancel: function () {}
-        });
-        d.showModal();
+            }
+        }).showModal();
     });
     //增加点
-    $('#J_AddNode').off().on('click',()=>{
+    d3.select('#J_AddNode').on('click',()=>{
         let dialogTpl=`
              <table class="op-dialog add-node-dialog">
                  <tr>
@@ -67,34 +59,27 @@ export default function(json,dialog,update,svg2Png){
                  </tr>
              </table>
             `;
-        var d = dialog({
+        let d = dialog({
             title: '添加点',
             content: dialogTpl,
             okValue: '确定',
             cancelValue: '取消',
-            ok: function () {
+            ok() {
                 let iptNodeName=$('.add-node-dialog').find('.node-name').val();
                 if(!!iptNodeName){
                     if(!(json.nodes.findIndex((item)=>($.trim(item.name.toLowerCase())==$.trim(iptNodeName.toLowerCase())))>-1)){
                         json.nodes.push({'name':iptNodeName});
                         update(json)
                     }else{
-                        var d = dialog({
-                            content: '已经有该节点，重复了！'
-                        });
-                        d.show();
-                        setTimeout(function () {
-                            d.close().remove();
-                        }, 2000);
+                        let d = dialog({content: '已经有该节点，重复了！'}).show();
+                        setTimeout(()=>{d.close().remove()}, 2000);
                     }
                 }
-            },
-            cancel: function () {}
-        });
-        d.showModal();
+            }
+        }).showModal();
     });
     //添加连接线和关系
-    $('#J_AddLR').off().on('click',()=>{
+    d3.select('#J_AddLR').on('click',()=>{
         let dialogTpl=`
              <table class="op-dialog add-link-dialog">
                  <tr>
@@ -124,12 +109,12 @@ export default function(json,dialog,update,svg2Png){
              </table>
             `;
 
-        var d = dialog({
+        let d = dialog({
             title: '添加连接线和关系',
             content: dialogTpl,
             okValue: '确定',
             cancelValue: '取消',
-            ok: function () {
+            ok() {
                 let addLinkDialog=$('.add-link-dialog');
                 let iptNodeSourceName=addLinkDialog.find('.node-source-name').val();
                 let iptNodeTargteName=addLinkDialog.find('.node-target-name').val();
@@ -159,33 +144,20 @@ export default function(json,dialog,update,svg2Png){
                         );
                         update(json)
                     }else{
-                        var d = dialog({
-                            content: '已经有连线或者没有这些节点！'
-                        });
-                        d.show();
-                        setTimeout(function () {
-                            d.close().remove();
-                        }, 2000);
+                        let d = dialog({content: '已经有连线或者没有这些节点!'}).show();
+                        setTimeout(()=>{d.close().remove()}, 2000);
                         return false
                     }
                 }else{
-                    var d = dialog({
-                        content: '不能为空！'
-                    });
-                    d.show();
-                    setTimeout(function () {
-                        d.close().remove();
-                    }, 2000);
+                    let d = dialog({content: '不能为空!'}).show();
+                    setTimeout(()=>{d.close().remove()}, 2000);
                     return false
                 }
-            },
-            cancel: function () {}
-        });
-        d.showModal();
+            }
+        }).showModal();
     });
     //导出png图片
-    $('#J_SvgToPng').on('click',()=>{
+    d3.select('#J_SvgToPng').on('click',()=>{
         svg2Png.saveSvgAsPng(document.getElementById("svgView"), "svg2Png.png")
     });
-
 }
