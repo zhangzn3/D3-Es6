@@ -4,7 +4,7 @@
 export default function(highlightObject,tooltip){
     return {
         bindMenuEvent(obj){
-            $('.tooltip').off().on('click', '.cm-btn.collapseCurNode',()=>{ highlightObject(obj);})
+            d3.select('.tooltip .cm-btn.collapseCurNode').on('click',()=>{ highlightObject(obj);})
         },
         highlightToolTip(obj){
             let toolTpl=`
