@@ -21,8 +21,6 @@ export default function(json,vis){
         .attr("dy", "30px")
         .attr('text-anchor','middle')
         .text(function(d) { return d.name });
-
     return _node
-
 }
 
