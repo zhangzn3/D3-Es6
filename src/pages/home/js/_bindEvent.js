@@ -138,7 +138,7 @@ export default function(json,dialog,update,svg2Png){
                             {
                                 "source":sourceNode,
                                 "target":targetNode,
-                                "relation":iptLineTextName
+                                "value":iptLineTextName
                             }
                         );
                         update(json)

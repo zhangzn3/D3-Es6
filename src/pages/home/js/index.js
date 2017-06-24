@@ -37,6 +37,7 @@ function highlightObject(obj){
         allLineText.classed('inactive', false);
     }
 }
+
 //填充数据和绑定节点的事件
 function update(json){
     //转换数据
@@ -83,6 +84,7 @@ d3.select("body").on('dblclick',()=>{
     highlightObject(null);
     force.restart();
 });
+
 
 
 
