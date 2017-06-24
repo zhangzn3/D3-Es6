@@ -37,6 +37,7 @@ export default function(json,dialog,update,svg2Png){
                     }else{
                         let d = dialog({content: '没有查找到该节点！'}).show();
                         setTimeout(()=>{d.close().remove()}, 2000);
+                        return false;
                     }
                 }
             }
