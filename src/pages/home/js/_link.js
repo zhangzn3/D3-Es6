@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/5/27.
- */
 export default function(json,vis){
     let _link=vis.selectAll("path.link");
     _link=_link.data(json.links,(d)=>(`${d.source.name}_${d.target.name}`));

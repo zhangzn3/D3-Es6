@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/6/20.
- */
 export default function(json,dialog,update,svg2Png){
     //删除节点和相关联的边
     d3.select('#J_DelNode').on('click',()=>{
@@ -73,6 +70,7 @@ export default function(json,dialog,update,svg2Png){
                     }else{
                         let d = dialog({content: '已经有该节点，重复了！'}).show();
                         setTimeout(()=>{d.close().remove()}, 2000);
+                        return false;
                     }
                 }
             }

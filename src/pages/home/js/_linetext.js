@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/6/17.
- */
 export default function(json,vis){
      let _linetext=vis.selectAll('.linetext');
      _linetext=_linetext.data(json.links,(d)=>(`${d.source.name}_${d.target.name}`));

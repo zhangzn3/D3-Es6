@@ -1,7 +1,3 @@
-/**
- * Created by Administrator on 2017/5/27.
- */
-
 export default function(force,tick,link,node,linetext){
     let dragstart=(d, i)=>{
         force.stop();

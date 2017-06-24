@@ -15,15 +15,13 @@ import _nodeDrag from './_nodeDrag.js'; //引入节点拖拽模块
 import _bindEvent from './_bindEvent.js';//工具栏操作
 import _tick from './_tick.js';//引入更新坐标模块
 let json=require('../data/data1.json');//获取数据
-
-//获取各模块返回值
 let vis=_vis();
 let force=_force(json);
 let bindEvent=_bindEvent(json,dialog,update,svg2Png);
-let tooltip=d3.select("body").append("div").attr("class", "tooltip").attr("opacity", 0.0);
+let tooltip=d3.select("body").append("div").attr("class", "tooltip");
 let dependsNode=[],dependsLinkAndText=[];
 
-//收起
+//节点显示隐藏
 function highlightObject(obj){
     let allNode=vis.selectAll('.node'),allLink=vis.selectAll('.link'),allLineText=vis.selectAll('.linetext');
     if (obj) {

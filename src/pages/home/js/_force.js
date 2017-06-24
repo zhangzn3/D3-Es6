@@ -1,6 +1,3 @@
-/**
- * Created by Administrator on 2017/5/27.
- */
 export default function(json){
     return d3.forceSimulation([])
         .force("link", d3.forceLink([]).id((d)=>(d.name)).distance(100))

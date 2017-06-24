@@ -1,4 +1,3 @@
-
 export default function (){
     let zoom = d3.zoom().scaleExtent([0.2,10]).on("zoom",()=>{_vis.attr("transform", d3.event.transform)});
     let _vis=d3.select("body").append("svg:svg").attr('id','svgView')
