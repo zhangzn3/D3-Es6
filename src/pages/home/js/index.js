@@ -14,7 +14,7 @@ import _tp from './_tp.js';//引入右键菜单模块
 import _nodeDrag from './_nodeDrag.js'; //引入节点拖拽模块
 import _bindEvent from './_bindEvent.js';//工具栏操作
 import _tick from './_tick.js';//引入更新坐标模块
-let json=require('../data/data1.json');//获取数据
+let json=require('../data/data2.json');//获取数据
 let vis=_vis();//创建svg视图
 let force=_force(json);//力导向图布局
 let bindEvent=_bindEvent(json,dialog,update,svg2Png);//绑定工具栏的操作事件

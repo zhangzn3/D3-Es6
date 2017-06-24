@@ -19,10 +19,10 @@ export default function(json,dialog,update,svg2Png){
             okValue: '确定',
             cancelValue: '取消',
             ok() {
-                let iptNodeName=$('.del-node-dialog').find('.node-name').val();
+                let iptNodeName=$.trim($('.del-node-dialog').find('.node-name').val().toLowerCase());
                 if(!!iptNodeName){
                     //获取节点索引
-                    let nodeIndex=json.nodes.findIndex((item)=>(item.name===iptNodeName));
+                    let nodeIndex=json.nodes.findIndex((item)=>(item.name.toLowerCase()===iptNodeName));
                     if(nodeIndex>-1){
                         //删除节点
                         json.nodes.splice(nodeIndex,1);
@@ -65,7 +65,7 @@ export default function(json,dialog,update,svg2Png){
             ok() {
                 let iptNodeName=$('.add-node-dialog').find('.node-name').val();
                 if(!!iptNodeName){
-                    if(!(json.nodes.findIndex((item)=>($.trim(item.name.toLowerCase())==$.trim(iptNodeName.toLowerCase())))>-1)){
+                    if(!(json.nodes.findIndex((item)=>(item.name.toLowerCase()==$.trim(iptNodeName.toLowerCase())))>-1)){
                         json.nodes.push({'name':iptNodeName});
                         update(json)
                     }else{
