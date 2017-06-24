@@ -7,6 +7,8 @@ export default function(json,vis){
     _node=_node.data(json.nodes,(d)=>(d.name));
     _node.exit().remove();
     _node=_node.enter().append("svg:g").attr("class", "node").merge(_node);
+    _node.selectAll('image').remove();
+    _node.selectAll('text').remove();
     _node.append("svg:image")
         .attr("class", "circle")
         .attr("xlink:href", icon)
@@ -14,7 +16,6 @@ export default function(json,vis){
         .attr("y", "-15px")
         .attr("width", "30px")
         .attr("height", "30px");
-
     _node.append("svg:text")
         .attr("class", "nodetext")
         .attr("dy", "30px")
@@ -22,5 +23,6 @@ export default function(json,vis){
         .text(function(d) { return d.name });
 
     return _node
+
 }
 
