@@ -8,7 +8,7 @@ export default function(json,vis){
      .attr("text-anchor", "middle")
      .attr("xlink:href", (d)=>{ //不应该有指向自己的关系 异常处理
      return d.source.index === d.target.index?false:`#${d.source.index}_${d.target.index}`})
-     .text((d)=>(d.relation))//关系文字
+     .text((d)=>(d.value))//关系文字
      .attr('fill','#18a1cf');
      return _linetext;
 }
