@@ -4,6 +4,7 @@
 import '../../../css/index.css'; //引入全局样式
 import * as d3 from 'd3'; //引入D3
 import svg2Png from 'save-svg-as-png'; //引入svg转png模块
+import setupSlider from './_slider.js';//引入阈值模块
 import dialog from 'art-dialog';//引入art-dialog
 import _vis from './_vis.js'; //引入容器模块
 import _force from './_force.js';//引入力导向模块
@@ -48,6 +49,7 @@ function update(json){
     let node=_node(json,vis);
     let linetext=_linetext(json,vis);
     let tp=_tp(highlightObject,tooltip);
+
     //绑定悬浮窗事件
     tooltip.on('dblclick',()=>{
             d3.event.stopPropagation();
@@ -59,7 +61,7 @@ function update(json){
             node.mouseoutTimeout&&clearTimeout(node.mouseoutTimeout);node.mouseoutTimeout = null;
             node.mouseoutTimeout = setTimeout(()=>{tp.highlightToolTip(null);}, 300);
         });
-    node.on('contextmenu',(d)=>{
+    node.on('contextmenu',d=>{
             node.mouseoutTimeout&&clearTimeout(node.mouseoutTimeout);node.mouseoutTimeout = null;
             tp.highlightToolTip(d);
             d3.event.preventDefault();
@@ -71,6 +73,8 @@ function update(json){
             node.mouseoutTimeout = setTimeout( ()=>{tp.highlightToolTip(null)}, 300);
         })
         .call(_nodeDrag(force,_tick,link,node,linetext));
+    //权重过滤
+    setupSlider(0,10,vis);
     //重启模拟
     force.restart();
     //更新坐标函数

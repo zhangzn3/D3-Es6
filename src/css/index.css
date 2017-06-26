@@ -58,3 +58,13 @@
 .ge .tooltip .cm-btn:hover{color:#337ab7}
 .ge .op-dialog td{height:30px}
 .ge .op-dialog .td-til{text-align:right; padding-right:10px; font-size:14px; color:#333}
+.ge .ticks {font: 14px sans-serif;  }
+.ge .track,
+.ge .track-inset,
+.ge .track-overlay {stroke-linecap: round;}
+.ge .track { stroke: #bbb;stroke-width: 10px;  }
+.ge .track-overlay {pointer-events: stroke;stroke-width: 50px;cursor: crosshair;  }
+.ge .sel-range{stroke: #337ab7;stroke-width: 8px;}
+.ge .handle {fill: #E0F7FA;stroke: #000;stroke-opacity: 0.5;stroke-width: 1.25px;  }
+.ge .handle:hover{fill: #337ab7;}
+.ge .handle.active {fill: #337ab7;}
