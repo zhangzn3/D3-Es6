@@ -82,7 +82,7 @@ function update(json){
 update(json);
 
 //权重过滤
-setupSlider(rangeSlider,0,10,vis);
+setupSlider(0,10,vis);
 
 //双击页面还原隐藏的元素
 d3.select("body").on('dblclick',()=>{
