@@ -40,7 +40,8 @@ export default function(json,dialog,update,svg2Png){
                         return false;
                     }
                 }
-            }
+            },
+            cancel(){}
         }).showModal();
     });
     //增加点
@@ -74,7 +75,8 @@ export default function(json,dialog,update,svg2Png){
                         return false;
                     }
                 }
-            }
+            },
+            cancel(){}
         }).showModal();
     });
     //添加连接线和关系
@@ -152,11 +154,13 @@ export default function(json,dialog,update,svg2Png){
                     setTimeout(()=>{d.close().remove()}, 2000);
                     return false
                 }
-            }
+            },
+            cancel(){}
         }).showModal();
     });
     //导出png图片
     d3.select('#J_SvgToPng').on('click',()=>{
         svg2Png.saveSvgAsPng(document.getElementById("svgView"), "svg2Png.png")
     });
+    //
 }

@@ -48,7 +48,7 @@ function update(json){
     let link=_link(json,vis);
     let node=_node(json,vis);
     let linetext=_linetext(json,vis);
-    let tp=_tp(highlightObject,tooltip);
+    let tp=_tp(highlightObject,tooltip,dialog,json,update);
 
     //绑定悬浮窗事件
     tooltip.on('dblclick',()=>{
