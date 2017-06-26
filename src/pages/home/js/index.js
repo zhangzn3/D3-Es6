@@ -73,14 +73,16 @@ function update(json){
             node.mouseoutTimeout = setTimeout( ()=>{tp.highlightToolTip(null)}, 300);
         })
         .call(_nodeDrag(force,_tick,link,node,linetext));
-    //权重过滤
-    setupSlider(0,10,vis);
+
     //重启模拟
     force.restart();
     //更新坐标函数
     force.on("tick",()=>{_tick(link,linetext,node)});
 }
 update(json);
+
+//权重过滤
+setupSlider(rangeSlider,0,10,vis);
 
 //双击页面还原隐藏的元素
 d3.select("body").on('dblclick',()=>{
