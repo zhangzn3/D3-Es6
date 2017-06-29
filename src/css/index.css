@@ -15,6 +15,9 @@
 .ge .node.inactive text {
     opacity: 0;
 }
+.link.highlight{
+    stroke:red
+}
 .ge .tooltip {
     font-family: "microsoft yahei", "simsun";
     font-size: 12px;
