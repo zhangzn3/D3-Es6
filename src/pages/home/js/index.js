@@ -87,6 +87,8 @@ function update(json){
         d3.event.preventDefault();
         d3.event.stopPropagation();
     });
+    //阈值模块初始化
+    setupSlider(0,10,weightFilter);
     //重启模拟
     force.restart();
     //更新坐标函数
@@ -94,8 +96,6 @@ function update(json){
 }
 update(json);
 
-//阈值模块初始化
-setupSlider(0,10,weightFilter);
 
 //双击页面还原隐藏的元素
 d3.select("body").on('dblclick',()=>{

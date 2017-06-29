@@ -118,23 +118,23 @@ export default function(json,dialog,update,svg2Png){
             ok() {
                 let addLinkDialog=$('.add-link-dialog');
                 let iptNodeSourceName=addLinkDialog.find('.node-source-name').val();
-                let iptNodeTargteName=addLinkDialog.find('.node-target-name').val();
+                let iptNodeTargetName=addLinkDialog.find('.node-target-name').val();
                 let iptLineTextName=addLinkDialog.find('.linetext-name').val();
                 let alreadyLinking=json.links.findIndex((item)=>{
-                     return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargteName
+                     return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargetName
                 });
                 function hasNodes(key){
                     return json.nodes.findIndex((item)=>{
                         return item.name===key
                     })
                 }
-                if(!!iptNodeSourceName&&!!iptNodeTargteName&&!!iptLineTextName){
-                    if(alreadyLinking<0&&hasNodes(iptNodeSourceName)>-1&& hasNodes(iptNodeTargteName)>-1){
+                if(!!iptNodeSourceName&&!!iptNodeTargetName&&!!iptLineTextName){
+                    if(alreadyLinking<0&&hasNodes(iptNodeSourceName)>-1&& hasNodes(iptNodeTargetName)>-1){
                         let sourceNode=json.nodes.filter((item)=>{
                             return item.name===iptNodeSourceName
                         })[0];
                         let targetNode=json.nodes.filter((item)=>{
-                            return item.name===iptNodeTargteName
+                            return item.name===iptNodeTargetName
                         })[0];
                         json.links.push(
                             {
@@ -162,5 +162,59 @@ export default function(json,dialog,update,svg2Png){
     d3.select('#J_SvgToPng').on('click',()=>{
         svg2Png.saveSvgAsPng(document.getElementById("svgView"), "svg2Png.png")
     });
-    //
+    //查找路径关系
+    d3.select('#J_FindRelation').on('click',()=>{
+        let dialogTpl=`
+             <table class="op-dialog find-link-dialog">
+                 <tr>
+                     <td class="td-til" >
+                      <span>节点一名称</span>
+                     </td>
+                     <td>
+                       <input type="text" name="node-source-name" class="node-source-name" value="" />
+                     </td>
+                 </tr>
+                  <tr>
+                     <td class="td-til" >
+                      <span>节点二名称</span>
+                     </td>
+                     <td>
+                       <input type="text" name="node-target-name" class="node-target-name" value="" />
+                     </td>
+                 </tr>
+             </table>
+            `;
+
+        let d = dialog({
+            title: '超找两个点之间的多层关系',
+            content: dialogTpl,
+            okValue: '确定',
+            cancelValue: '取消',
+            ok() {
+                let findLinkDialog=$('.find-link-dialog');
+                let iptNodeSourceName=$.trim(findLinkDialog.find('.node-source-name').val().toLowerCase());
+                let iptNodeTargetName=$.trim(findLinkDialog.find('.node-target-name').val().toLowerCase());
+                let allLink=d3.selectAll('.link');
+                let highlightLinks=[];
+                if(!!iptNodeSourceName&&!!iptNodeTargetName){
+                    json.links.forEach(function(item){
+                        //暂时显示两个节点本身的路径，应该改成多层
+                        let sname=item.source.name.toLowerCase();
+                        let tname=item.target.name.toLowerCase();
+                        if((sname==iptNodeSourceName&&tname==iptNodeTargetName)||(sname==iptNodeTargetName&&tname==iptNodeSourceName)){
+                            Array.prototype.push.call(highlightLinks,item.index)
+                        }
+                    });
+                    allLink.classed('highlight',(d)=>(highlightLinks.indexOf(d.index) > -1));
+                }
+            },
+            cancel(){}
+        }).showModal();
+    });
+    //取消查找路径
+    d3.select('#J_CancelFind').on('click',()=>{
+        let allLink=d3.selectAll('.link');
+        allLink.classed('highlight',(d)=>(false));
+    });
+
 }
