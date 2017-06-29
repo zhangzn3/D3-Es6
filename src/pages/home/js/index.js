@@ -39,6 +39,15 @@ function highlightObject(obj){
     }
 }
 
+//权重过滤
+function weightFilter(v1,v2){
+    let allNode=vis.selectAll('.node'),allLink=vis.selectAll('.link'),allLineText=vis.selectAll('.linetext');
+    v1=d3.select('.sel-range').attr('v1')||0;
+    v2=d3.select('.sel-range').attr('v2')||10;
+    allLink.classed('inactive',(d)=>(d.value<v1||d.value>v2));
+    allLineText.classed('inactive',(d)=>(d.value<v1||d.value>v2));
+}
+
 //填充数据和绑定节点的事件
 function update(json){
     //转换数据
@@ -48,7 +57,7 @@ function update(json){
     let link=_link(json,vis);
     let node=_node(json,vis);
     let linetext=_linetext(json,vis);
-    let tp=_tp(highlightObject,tooltip,dialog,json,update);
+    let tp=_tp(highlightObject,tooltip,dialog,json,update,weightFilter);
 
     //绑定悬浮窗事件
     tooltip.on('dblclick',()=>{
@@ -73,7 +82,11 @@ function update(json){
             node.mouseoutTimeout = setTimeout( ()=>{tp.highlightToolTip(null)}, 300);
         })
         .call(_nodeDrag(force,_tick,link,node,linetext));
-
+    link.on('contextmenu',d=>{
+        tp.highlightToolTip(d);
+        d3.event.preventDefault();
+        d3.event.stopPropagation();
+    });
     //重启模拟
     force.restart();
     //更新坐标函数
@@ -81,13 +94,14 @@ function update(json){
 }
 update(json);
 
-//权重过滤
-setupSlider(0,10,vis);
+//阈值模块初始化
+setupSlider(0,10,weightFilter);
 
 //双击页面还原隐藏的元素
 d3.select("body").on('dblclick',()=>{
     dependsNode = dependsLinkAndText = [];
     highlightObject(null);
+    setupSlider(0,10,weightFilter);
     force.restart();
 });
 

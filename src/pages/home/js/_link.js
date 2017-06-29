@@ -4,7 +4,8 @@ export default function(json,vis){
     _link.exit().remove();
     _link=_link.enter().append("svg:path").attr("class", "link").merge(_link)
         .attr('stroke-width',(d)=>{
-            return  d.value*0.17
+            return 0.7
+        /*    return  d.value*0.17*/
         })
         .attr('id',(d)=>(d.source.index + '_' + d.target.index))
         //不应该有指向自己的关系 异常处理
