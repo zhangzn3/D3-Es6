@@ -1,4 +1,10 @@
 export default function(json,dialog,update,svg2Png){
+/*    let sundo = new SimpleUndo({maxLength: 10,provider(done){
+        let newJson=$.extend(true,{},json);
+        done(newJson)
+    }});//撤销 重做
+    sundo.save();*/
+
     //删除节点和相关联的边
     d3.select('#J_DelNode').on('click',()=>{
         let dialogTpl=`
@@ -68,7 +74,8 @@ export default function(json,dialog,update,svg2Png){
                 if(!!iptNodeName){
                     if(!(json.nodes.findIndex((item)=>(item.name.toLowerCase()==$.trim(iptNodeName.toLowerCase())))>-1)){
                         json.nodes.push({'name':iptNodeName});
-                        update(json)
+                    /*    sundo.save();*/
+                        update(json);
                     }else{
                         let d = dialog({content: '已经有该节点，重复了！'}).show();
                         setTimeout(()=>{d.close().remove()}, 2000);
@@ -216,5 +223,17 @@ export default function(json,dialog,update,svg2Png){
         let allLink=d3.selectAll('.link');
         allLink.classed('highlight',(d)=>(false));
     });
+/*    //撤销
+    d3.select('#J_Undo').on('click',()=>{
+        sundo.undo(function(serialized){
+            update(serialized);
+        });
+    });
+    //重做
+    d3.select('#J_Redo').on('click',()=>{
+        sundo.redo(function(serialized){
+            update(serialized);
+        });
+    });*/
 
 }

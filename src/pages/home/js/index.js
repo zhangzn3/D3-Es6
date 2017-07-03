@@ -2,10 +2,13 @@
  * Created by Administrator on 2017/6/17.
  */
 import '../../../css/index.css'; //引入全局样式
-import * as d3 from 'd3'; //引入D3
-import svg2Png from 'save-svg-as-png'; //引入svg转png模块
+/*注释部分移到dll.js依赖库*/
+/*import "babel-polyfill";//兼容*/
+/*import * as d3 from 'd3'; //引入D3*/
+/*import svg2Png from 'save-svg-as-png'; //引入svg转png模块*/
+/*import dialog from 'art-dialog';//引入art-dialog*/
+import SimpleUndo from 'simple-undo'; //引入undo模块
 import setupSlider from './_slider.js';//引入阈值模块
-import dialog from 'art-dialog';//引入art-dialog
 import _vis from './_vis.js'; //引入容器模块
 import _force from './_force.js';//引入力导向模块
 import _node from './_node.js';//引入节点模块
@@ -91,11 +94,11 @@ function update(json){
     setupSlider(0,10,weightFilter);
     //重启模拟
     force.restart();
+
     //更新坐标函数
     force.on("tick",()=>{_tick(link,linetext,node)});
 }
 update(json);
-
 
 //双击页面还原隐藏的元素
 d3.select("body").on('dblclick',()=>{
@@ -104,6 +107,9 @@ d3.select("body").on('dblclick',()=>{
     setupSlider(0,10,weightFilter);
     force.restart();
 });
+
+
+
 
 
 
