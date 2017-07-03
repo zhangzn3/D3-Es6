@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f84fb44aa8e95580204c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b83aebc67aecfeedab47"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -990,8 +990,9 @@ exports.default = function (json, vis) {
     });
     _link.exit().remove();
     _link = _link.enter().append("svg:path").attr("class", "link").merge(_link).attr('stroke-width', function (d) {
-        var value = d.value.match(/^\d+$/);
-        return !!value ? value[0] * 0.17 : 1;
+        //只有一个字段，暂时这样写
+        var value = (d.value + "").match(/^\d+$/);
+        return !!value ? value[0] * 0.27 < 1 ? 1 : value[0] * 0.27 : 1;
     }).attr('id', function (d) {
         return d.source.index + '_' + d.target.index;
     }
