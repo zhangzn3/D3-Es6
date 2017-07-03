@@ -7,6 +7,7 @@ import '../../../css/index.css'; //引入全局样式
 /*import * as d3 from 'd3'; //引入D3*/
 /*import svg2Png from 'save-svg-as-png'; //引入svg转png模块*/
 /*import dialog from 'art-dialog';//引入art-dialog*/
+import Mock from 'mockjs';//mock
 import SimpleUndo from 'simple-undo'; //引入undo模块
 import setupSlider from './_slider.js';//引入阈值模块
 import _vis from './_vis.js'; //引入容器模块

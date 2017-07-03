@@ -3,6 +3,7 @@ export default function(force,tick,link,node,linetext){
         force.stop();
         d3.event.sourceEvent.stopPropagation();
     };
+
     let dragmove=(d, i)=>{
         d.px += d3.event.dx;
         d.py += d3.event.dy;
