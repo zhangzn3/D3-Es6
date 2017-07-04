@@ -114,6 +114,14 @@ export default function(json,dialog,update,svg2Png){
                        <input type="text" name="linetext-name" class="linetext-name" value="" />
                      </td>
                  </tr>
+                 <tr>
+                     <td class="td-til" >
+                      <span>设置权重</span>
+                     </td>
+                     <td>
+                       <input type="number" name="weight-value" class="weight-value" value="" min="1" max="10" />
+                     </td>
+                 </tr>
              </table>
             `;
 
@@ -127,6 +135,7 @@ export default function(json,dialog,update,svg2Png){
                 let iptNodeSourceName=addLinkDialog.find('.node-source-name').val();
                 let iptNodeTargetName=addLinkDialog.find('.node-target-name').val();
                 let iptLineTextName=addLinkDialog.find('.linetext-name').val();
+                let iptWeightValue=addLinkDialog.find('.weight-value').val();
                 let alreadyLinking=json.links.findIndex((item)=>{
                      return item.source.name===iptNodeSourceName&&item.target.name===iptNodeTargetName
                 });
@@ -135,7 +144,7 @@ export default function(json,dialog,update,svg2Png){
                         return item.name===key
                     })
                 }
-                if(!!iptNodeSourceName&&!!iptNodeTargetName&&!!iptLineTextName){
+                if(!!iptNodeSourceName&&!!iptNodeTargetName&&!!iptLineTextName&&!!iptWeightValue){
                     if(alreadyLinking<0&&hasNodes(iptNodeSourceName)>-1&& hasNodes(iptNodeTargetName)>-1){
                         let sourceNode=json.nodes.filter((item)=>{
                             return item.name===iptNodeSourceName
@@ -147,7 +156,8 @@ export default function(json,dialog,update,svg2Png){
                             {
                                 "source":sourceNode,
                                 "target":targetNode,
-                                "value":iptLineTextName
+                                "relation":iptLineTextName,
+                                "weight":parseInt(iptWeightValue,10)
                             }
                         );
                         update(json)

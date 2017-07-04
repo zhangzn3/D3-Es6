@@ -43,7 +43,7 @@ export default function(highlightObject,tooltip,dialog,json,update,weightFilter)
                  </tr>
                  <tr>
                      <td class="td-til" >
-                      <span>节点属性</span>
+                      <span>当前分组</span>
                      </td>
                      <td>
                        <input type="text" name="node-name" class="node-group" value=${obj.group} />
@@ -92,7 +92,7 @@ export default function(highlightObject,tooltip,dialog,json,update,weightFilter)
                       <span>当前权重</span>
                      </td>
                      <td>
-                       <input type="text" name="cur-weight" class="cur-weight" value=${obj.value} />
+                       <input type="number" min="1" max="10"  name="cur-weight" class="cur-weight" value=${obj.weight} />
                      </td>
                  </tr>
              </table>
@@ -106,7 +106,7 @@ export default function(highlightObject,tooltip,dialog,json,update,weightFilter)
                     let iptWeight=$('.edit-link-dialog').find('.cur-weight').val();
                     if(!!iptWeight){
                         json.links.forEach((item)=>{
-                            item.index==obj.index&&(item.value=iptWeight)
+                            item.index==obj.index&&(item.weight=iptWeight)
                         });
                         update(json);
                         weightFilter();
