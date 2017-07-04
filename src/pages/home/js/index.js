@@ -35,7 +35,9 @@ Mock.mock('leo/api/getRelationData', {
         "relation|1":["打电话","发邮件","玩游戏"]
     }]
 });
-$.ajax({url: 'leo/api/getRelationData',dataType:'json'}).done(function(json, status, xhr){
+new Promise((resolve,reject)=>{$.ajax({url: 'leo/api/getRelationData',dataType:'json'})
+    .then(data=>{resolve(data)})}).then(json=>{init(json)});
+function init(json){
     let vis=_vis();//创建svg视图
     let force=_force(json);//力导向图布局
     let bindEvent=_bindEvent(json,dialog,update,svg2Png);//绑定工具栏的操作事件
@@ -124,7 +126,7 @@ $.ajax({url: 'leo/api/getRelationData',dataType:'json'}).done(function(json, sta
         setupSlider(0,10,weightFilter);
         force.restart();
     });
-});
+}
 
 
 
