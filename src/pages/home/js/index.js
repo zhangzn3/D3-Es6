@@ -2,12 +2,10 @@
  * Created by Administrator on 2017/6/17.
  */
 import '../../../css/index.css'; //引入全局样式
-/*注释部分移到dll.js依赖库*/
-/*import "babel-polyfill";//兼容*/
-/*import * as d3 from 'd3'; //引入D3*/
-/*import svg2Png from 'save-svg-as-png'; //引入svg转png模块*/
-/*import dialog from 'art-dialog';//引入art-dialog*/
-import Mock from 'mockjs';//mock
+import "babel-polyfill";//兼容
+import * as d3 from 'd3'; //引入D3
+import svg2Png from 'save-svg-as-png'; //引入svg转png模块
+import dialog from 'art-dialog';//引入art-dialog
 import SimpleUndo from 'simple-undo'; //引入undo模块
 import setupSlider from './_slider.js';//引入阈值模块
 import _vis from './_vis.js'; //引入容器模块
@@ -19,6 +17,7 @@ import _tp from './_tp.js';//引入右键菜单模块
 import _nodeDrag from './_nodeDrag.js'; //引入节点拖拽模块
 import _bindEvent from './_bindEvent.js';//工具栏操作
 import _tick from './_tick.js';//引入更新坐标模块
+import Mock from 'mockjs';//mock
 Mock.mock('leo/api/getRelationData', {
     'nodes|100': [{
         "id|+1": 1,
@@ -28,7 +27,7 @@ Mock.mock('leo/api/getRelationData', {
         "icon|1":['iconName1','iconName2','iconName3'],
         "codeAddress":/\d{18}/
     }],
-    'links|50': [{
+    'links|100': [{
         "source|1-100":1,
         "target|1-100":1,
         "weight|1-10":1,
