@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>home页</title>
-    <style>
-        button{margin-right:20px;}
-        .ge-toolbar{position:absolute; top:20px; left:200px;}
-    </style>
- <script src="./js/dll.bundle.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="./js/thirdPart/bootstrap/css/bootstrap.css"/>
+    <script src="./js/thirdPart/jquery/jquery.min.js"></script>
+    <script src="./js/thirdPart/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/dll.bundle.js"></script>
 </head>
-<body class="ge">
-    <div class="ge-toolbar">
-        <button id="J_DelNode">删除节点&相关联的边</button>
-        <button id="J_AddNode">添加点</button>
-        <button id="J_AddLR">添加连接线和关系</button>
-        <button id="J_SvgToPng">导出图片</button>
-        <button id="J_FindRelation">查找路径(需要提供多层查找算法)</button>
-        <button id="J_CancelFind">取消查找路径</button>
-<!--        <button id="J_Undo">撤销</button>
-        <button id="J_Redo">重做</button>-->
-        <div class="slider-holder"></div>
+<body>
+<div class="container-fluid wrapper hfc">
+    <div class="row hfc">
+        <div class="col-md-12 hfc">
+            <div class="btn-group btn-group-vertical fn-toolbar">
+                <button class="btn btn-default" id="J_AddNode" type="button"><em class="icon-align-left"></em>添加节点</button>
+                <button class="btn btn-default" id="J_DelNode" type="button"><em class="icon-align-center"></em>删除节点</button>
+                <button class="btn btn-default" id="J_AddLink" type="button"><em class="icon-align-right"></em>添加连线</button>
+                <button class="btn btn-default" type="button"><em class="icon-align-justify"></em>删除连线</button>
+                <button class="btn btn-default" id="J_ExportPng" type="button"><em class="icon-align-justify"></em>导出图片</button>
+                <button class="btn btn-default" id="J_ExportExcel" type="button"><em class="icon-align-justify"></em>导出Excel</button>
+            </div>
+            <div class="graph-area hfc">
+                
+            </div>
+
+        </div>
     </div>
+</div>
 </body>
 </html>
+
+

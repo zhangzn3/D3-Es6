@@ -2,23 +2,56 @@
     padding: 0;
     margin: 0
 }
-.ge .nodetext {
-    pointer-events: none;
-    font: 12px sans-serif;
+
+html,
+body {
+    height: 100%;
+    /* background: #333url('../images/bj.jpg') background-size:100% 100%; */
+    background-image:-webkit-radial-gradient(ellipse farthest-corner at center top,#000d4d 0%,#000105 100%);
+    background-image:radial-gradient(ellipse farthest-corner at center top,#000d4d 0%,#000105 100%);
 }
-.ge .linetext {
-    font-size: 12px;
+
+.hfc {
+    height: 100%
 }
-.ge .link.inactive,
-.ge .linetext.inactive,
-.ge .node.inactive image,
-.ge .node.inactive text {
-    opacity: 0;
+
+@keyframes blink {
+    from 50%,
+    to {
+        opacity: 1;
+    }
+    25%,
+    75% {
+        opacity: 0;
+    }
 }
-.link.highlight{
-    stroke:red
+
+.wrapper {}
+
+.wrapper .fn-toolbar {
+    position: absolute;
+    left: 27px;
+    top: 100px;
+    z-index: 19871005;
 }
-.ge .tooltip {
+
+.wrapper .graph-area {
+    overflow: hidden;
+}
+
+.wrapper .node.new-node {
+/*     animation: blink .5s 2 ease-in-out */
+}
+
+.wrapper .node .node-bg {
+    display: none;
+}
+
+.wrapper .node.active .node-bg {
+    display: block;
+}
+
+.graph-contextmenu {
     font-family: "microsoft yahei", "simsun";
     font-size: 12px;
     width: 170px;
@@ -26,48 +59,47 @@
     z-index: 2;
     position: absolute;
     background: #fff;
-    display:none;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
-.ge .tooltip .title {
+
+.graph-contextmenu .title {
     color: #fff;
     padding: 5px;
     font-size: 14px;
     background-color: #337ab7;
     border-radius: 5px 5px 0 0;
 }
-.ge .tooltip .detail-info {
+
+.graph-contextmenu .context-menu-item {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #337ab7;
 }
-.ge .tooltip .detail-info td {
+
+.graph-contextmenu .context-menu-item td {
     padding: 3px 5px;
     color: #666;
     vertical-align: middle;
 }
-.ge .tooltip .detail-info tr:nth-of-type(odd) {
+
+.graph-contextmenu .context-menu-item tr:nth-of-type(odd) {
     background: #f9f9f9;
 }
-.ge .tooltip .detail-info td.td-label {
+
+.tooltip .context-menu-item td.td-label {
     color: #333;
-    width:42px;
+    width: 42px;
 }
-.ge .tooltip .detail-info td a {
+
+.graph-contextmenu .context-menu-item td a {
     color: #666
 }
-.ge .tooltip .cm-btn{cursor:pointer;}
-.ge .tooltip .cm-btn:hover{color:#337ab7}
-.ge .op-dialog td{height:30px}
-.ge .op-dialog .td-til{text-align:right; padding-right:10px; font-size:14px; color:#333}
-.ge .ticks {font: 14px sans-serif;  }
-.ge .track,
-.ge .track-inset,
-.ge .track-overlay {stroke-linecap: round;}
-.ge .track { stroke: #bbb;stroke-width: 10px;  }
-.ge .track-overlay {pointer-events: stroke;stroke-width: 50px;cursor: crosshair;  }
-.ge .sel-range{stroke: #337ab7;stroke-width: 8px;}
-.ge .handle {fill: #E0F7FA;stroke: #000;stroke-opacity: 0.5;stroke-width: 1.25px;  }
-.ge .handle:hover{fill: #337ab7;}
-.ge .handle.active {fill: #337ab7;}
+
+.graph-contextmenu .menu-item-btn {
+    cursor: pointer;
+}
+
+.graph-contextmenu .menu-item-btn:hover {
+    color: #337ab7
+}
