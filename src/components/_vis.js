@@ -14,11 +14,12 @@ export default function() {
         .attr("width", width)
         .attr("height", height)
         .call(zoom)
-        .on("dblclick.zoom", null)
-        .append("g")
+        .on("dblclick.zoom", null) 
+        .append("svg:g")
         .attr('class', "all")
         .attr("data-width", width)
-        .attr("data-height", height);
+        .attr("data-height", height)
+        
 
     let arrow = vis.append("svg:defs")
         .selectAll("marker")
@@ -37,6 +38,6 @@ export default function() {
         .append("svg:path")
         .attr("d", "M0,-5L10,0L0,5")
         .attr('fill', '#666');
-
+  
     return vis;
 }

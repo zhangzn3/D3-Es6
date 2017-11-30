@@ -87,8 +87,8 @@ module.exports = {
         ),
         new HtmlWebpackPlugin({
             title: 'page1',//用来生成页面的 title 元素
-            template: "pages/home/home.html",//自定义的html页(默认支持ejs模板),如果不指定模板，会生成最基本的html结构
-            filename: 'home.html',
+            template: "pages/home/index.html",//自定义的html页(默认支持ejs模板),如果不指定模板，会生成最基本的html结构
+            filename: 'index.html',
             hash: true,
             inject: 'body',//script资源插入模板的位置| 'head' | 'body' |
             chunks: ['home']

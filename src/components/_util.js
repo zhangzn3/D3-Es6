@@ -37,13 +37,21 @@ export default {
                 convertDataExtract[i]["目标"] = d["target"]["id"];
             });
             downloadExl(convertDataExtract);
-        }else{
-          this.tip("没有连接线数据可导出！");
+        } else {
+            this.tip("没有连接线数据可导出！");
         }
     },
-    tip:function(msg){
-       dTimer && clearTimeout(dTimer); 
-       let d=dialog({content:msg}).show();
-       let dTimer=setTimeout(()=>{d.close().remove()},2000);
+    //消息提示
+    tip: function(msg) {
+        dTimer && clearTimeout(dTimer);
+        let d = dialog({ content: msg }).show();
+        let dTimer = setTimeout(() => { d.close().remove() }, 2000);
+    },
+    getTranslateAndScale() {
+        let transform = $(".all").attr("transform");
+        let matchArr = transform && /translate/.test(transform) && /scale/.test(transform) && transform.match(/translate\(([^\)]+)\)\s?scale\(([^\)]+)/);
+        let translate = matchArr && matchArr[1].split(",") || [0, 0]
+        let scale = matchArr && matchArr[2] || 1;
+        return {translate,scale}
     }
-}
+}   

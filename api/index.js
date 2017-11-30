@@ -16,7 +16,7 @@ app.get("/api/getData", function(req, rps) {
                 { "id": "Cravatte", "group": ["小广告"] },
                 { "id": "Count", "group": ["小广告"] },
                 { "id": "OldMan", "group": ["小广告"] },
-                /*{ "id": "Labarre", "group": ["小广告","中介","骚扰电话"] },
+                { "id": "Labarre", "group": ["小广告","中介","骚扰电话"] },
                 { "id": "Valjean", "group": ["小广告","中介","骚扰电话"] },
                 { "id": "Marguerite", "group": ["小广告","中介","骚扰电话"] },
                 { "id": "Mme.deR", "group": ["小广告","中介","骚扰电话"] },
@@ -82,9 +82,9 @@ app.get("/api/getData", function(req, rps) {
                 { "id": "Child1", "group": ["小广告"] },
                 { "id": "Child2", "group": ["小广告"] },
                 { "id": "Brujon", "group": ["骚扰电话"] },
-                { "id": "Mme.Hucheloup", "group": ["中介"] }*/
+                { "id": "Mme.Hucheloup", "group": ["中介"] }
             ],
-            "links": [/*
+            "links": [
                 { "source": "Napoleon", "target": "Myriel", "value": 1 },
                 { "source": "Mlle.Baptistine", "target": "Myriel", "value": 8 },
                 { "source": "Mme.Magloire", "target": "Myriel", "value": 10 },
@@ -338,7 +338,7 @@ app.get("/api/getData", function(req, rps) {
                 { "source": "Mme.Hucheloup", "target": "Bahorel", "value": 1 },
                 { "source": "Mme.Hucheloup", "target": "Courfeyrac", "value": 1 },
                 { "source": "Mme.Hucheloup", "target": "Gavroche", "value": 1 },
-                { "source": "Mme.Hucheloup", "target": "Enjolras", "value": 1 }*/
+                { "source": "Mme.Hucheloup", "target": "Enjolras", "value": 1 }
             ]
         },
         messages: "数据获取成功！"

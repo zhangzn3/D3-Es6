@@ -42,6 +42,7 @@ export default function(json, vis) {
         .attr("font-size", "12px")
         .attr("fill", "#286090")
         .html(d => d["group"].length ? ("【" + d["group"].reduce((prev, cur) => (`${prev}<tspan fill=${groupMap[cur]}>${cur}</tspan>` + " "), "") + "】").replace(/\s+】/, "】") : "");
+
     return node;
 
 }

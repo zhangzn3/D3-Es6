@@ -39,16 +39,41 @@ body {
     overflow: hidden;
 }
 
-.wrapper .node.new-node {
+.wrapper .graph-area .node.new-node {
 /*     animation: blink .5s 2 ease-in-out */
 }
 
-.wrapper .node .node-bg {
+
+.wrapper .graph-area .node .node-bg {
     display: none;
 }
 
-.wrapper .node.active .node-bg {
+.wrapper .graph-area .node.active .node-bg {
     display: block;
+}
+.wrapper .graph-area .drag-line{
+  stroke-width:1px;
+  stroke:#5bc0de;
+  cursor: crosshair;  
+
+}
+.wrapper .graph-area .drag-line-hidden{
+  stroke-width:0; 
+  cursor: crosshair;  
+}
+
+.wrapper .graph-area .link{
+
+}
+
+.wrapper .graph-area .link:hover{
+    stroke:#86b7f9;
+    stroke-width:10px;
+}
+
+.wrapper .graph-area .link.active{
+    stroke:#1c7dfa; 
+    stroke-width:5px;
 }
 
 .graph-contextmenu {
