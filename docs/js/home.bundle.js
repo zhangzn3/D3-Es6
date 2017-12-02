@@ -12682,7 +12682,7 @@ return jQuery;
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = /*__webpack_require__.p + */"./preview/images/7f21c918.node.png";
+module.exports = /*__webpack_require__.p + */"./images/7f21c918.node.png";
 
 /***/ }),
 /* 24 */
