@@ -15,3 +15,6 @@
 2. npm run build 
 3. node api
 4. 打开http://localhost:3000即可
+
+
+#####在线预览地址:[https://zhangzn3.github.io/D3-Es6/](https://zhangzn3.github.io/D3-Es6/ "预览")
