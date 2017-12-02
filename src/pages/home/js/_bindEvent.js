@@ -113,6 +113,7 @@ export default function(json, update, vis, force, node, link) {
 
 //删除节点
 export function __delNode(json, update,selNode) {
+    let needDelLinks=new Set();
     selNode = selNode || d3.selectAll('.node.active').data();
     if (selNode.length == 1) {
         json.nodes.forEach(function(d, i) {
@@ -120,11 +121,12 @@ export function __delNode(json, update,selNode) {
                 json.nodes.splice(i, 1)
             }
         });
-        json.links.forEach(function(d,i){
-            if(d["source"]["id"]==selNode[0]["id"] || d["target"]["id"]==selNode[0]["id"]){
-                json.links.splice(i,1)
-            }   
-        });
+        for(let linkIdx=0;linkIdx<json.links.length;linkIdx++){
+           if(json.links[linkIdx]["source"]["id"]==selNode[0]["id"] || json.links[linkIdx]["target"]["id"]==selNode[0]["id"]){
+             json.links.splice(linkIdx,1);
+             linkIdx--
+            }  
+        } 
         update(json);
     } else {
         util.tip('请选择一个节点！');
@@ -137,7 +139,7 @@ export function __delLink(json, update,selLink) {
     if (selLink.length == 1) {
         json.links.forEach(function(d,i){
             if(d["source"]["id"]==selLink[0]["source"]["id"] && d["target"]["id"]==selLink[0]["target"]["id"]){
-                json.links.splice(i,1)
+                json.links.splice(i,1);
             }   
         });
         update(json);

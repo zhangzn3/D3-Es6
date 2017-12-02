@@ -1,14 +1,13 @@
-
 import "babel-polyfill"; //兼容
 import '../../../css/index.css'; //引入自定义样式
 import API from "../../../components/api.js"; //模拟数据
 import util from '../../../components/_util.js'; //公共方法
 import _vis from '../../../components/_vis.js'; //容器模块
-import _link from '../../../components/_link.js';//连接线模块
-import _node from '../../../components/_node.js';//节点模块
-import _tick from '../../../components/_tick.js';//更新坐标模块
+import _link from '../../../components/_link.js'; //连接线模块
+import _node from '../../../components/_node.js'; //节点模块
+import _tick from '../../../components/_tick.js'; //更新坐标模块
 import _nodeDrag from '../../../components/_nodeDrag.js'; //节点拖拽模块
-import _force from '../../../components/_force.js';//力导向模块
+import _force from '../../../components/_force.js'; //力导向模块
 import _linetext from '../../../components/_linetext.js'; //引入关系文字模块
 import _exportPng from '../../../components/_exportPng.js'; //导出图片模块
 import _bindEvent from './_bindEvent.js'; //绑定工具栏操作事件
@@ -16,44 +15,376 @@ import _bindLinkAndNodeEvent from './_bindLinkAndNodeEvent.js'; //绑定节点�
 
 
 
-//绘图数据获取
-API.getData().then(function(rps){
-    if(rps["success"] && rps["result"]){
-        let json=Object.prototype.toString.call(rps["result"])=="[object String]"?JSON.parse(rps["result"]):rps["result"];
+//绘图数据获取  为了演示暂时将then改成always了
+API.getData().always(function(rps) {
+    if (rps["success"] && rps["result"]) {
+        const rps = {
+            "success": true,
+            "result": {
+                "nodes": [
+                    { "id": "Myriel", "group": ["小广告"] },
+                    { "id": "Napoleon", "group": ["小广告"] },
+                    { "id": "Mlle.Baptistine", "group": ["小广告"] },
+                    { "id": "Mme.Magloire", "group": ["小广告"] },
+                    { "id": "CountessdeLo", "group": ["小广告"] },
+                    { "id": "Geborand", "group": ["小广告"] },
+                    { "id": "Champtercier", "group": ["小广告"] },
+                    { "id": "Cravatte", "group": ["小广告"] },
+                    { "id": "Count", "group": ["小广告"] },
+                    { "id": "OldMan", "group": ["小广告"] },
+                    { "id": "Labarre", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Valjean", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Marguerite", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Mme.deR", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Isabeau", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Gervais", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Tholomyes", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Listolier", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Fameuil", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Blacheville", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Favourite", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Dahlia", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Zephine", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Fantine", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Mme.Thenardier", "group": ["骚扰电话"] },
+                    { "id": "Thenardier", "group": ["骚扰电话"] },
+                    { "id": "Cosette", "group": ["小广告", "中介"] },
+                    { "id": "Javert", "group": ["骚扰电话"] },
+                    { "id": "Fauchelevent", "group": ["中介", "骚扰电话"] },
+                    { "id": "Bamatabois", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Perpetue", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Simplice", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Scaufflaire", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Woman1", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Judge", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Champmathieu", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Brevet", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Chenildieu", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Cochepaille", "group": ["小广告", "中介", "骚扰电话"] },
+                    { "id": "Pontmercy", "group": ["骚扰电话"] },
+                    { "id": "Boulatruelle", "group": ["骚扰电话", "中介"] },
+                    { "id": "Eponine", "group": ["骚扰电话"] },
+                    { "id": "Anzelma", "group": ["骚扰电话"] },
+                    { "id": "Woman2", "group": ["小广告", "中介"] },
+                    { "id": "MotherInnocent", "group": ["中介", "骚扰电话"] },
+                    { "id": "Gribier", "group": ["中介", "骚扰电话"] },
+                    { "id": "Jondrette", "group": ["小广告", "中介"] },
+                    { "id": "Mme.Burgon", "group": ["小广告", "中介"] },
+                    { "id": "Gavroche", "group": ["中介"] },
+                    { "id": "Gillenormand", "group": ["小广告", "中介"] },
+                    { "id": "Magnon", "group": ["小广告", "中介"] },
+                    { "id": "Mlle.Gillenormand", "group": ["小广告", "中介"] },
+                    { "id": "Mme.Pontmercy", "group": ["小广告", "中介"] },
+                    { "id": "Mlle.Vaubois", "group": ["小广告", "中介"] },
+                    { "id": "Lt.Gillenormand", "group": ["小广告", "中介"] },
+                    { "id": "Marius", "group": ["中介"] },
+                    { "id": "BaronessT", "group": ["小广告", "中介"] },
+                    { "id": "Mabeuf", "group": ["中介"] },
+                    { "id": "Enjolras", "group": ["中介"] },
+                    { "id": "Combeferre", "group": ["中介"] },
+                    { "id": "Prouvaire", "group": ["中介"] },
+                    { "id": "Feuilly", "group": ["中介"] },
+                    { "id": "Courfeyrac", "group": ["中介"] },
+                    { "id": "Bahorel", "group": ["中介"] },
+                    { "id": "Bossuet", "group": ["中介"] },
+                    { "id": "Joly", "group": ["中介"] },
+                    { "id": "Grantaire", "group": ["中介"] },
+                    { "id": "MotherPlutarch", "group": ["中介", "骚扰电话"] },
+                    { "id": "Gueulemer", "group": ["骚扰电话"] },
+                    { "id": "Babet", "group": ["骚扰电话"] },
+                    { "id": "Claquesous", "group": ["骚扰电话"] },
+                    { "id": "Montparnasse", "group": ["骚扰电话"] },
+                    { "id": "Toussaint", "group": ["小广告", "中介"] },
+                    { "id": "Child1", "group": ["小广告"] },
+                    { "id": "Child2", "group": ["小广告"] },
+                    { "id": "Brujon", "group": ["骚扰电话"] },
+                    { "id": "Mme.Hucheloup", "group": ["中介"] }
+                ],
+                "links": [
+                    { "source": "Napoleon", "target": "Myriel", "value": 1 },
+                    { "source": "Mlle.Baptistine", "target": "Myriel", "value": 8 },
+                    { "source": "Mme.Magloire", "target": "Myriel", "value": 10 },
+                    { "source": "Mme.Magloire", "target": "Mlle.Baptistine", "value": 6 },
+                    { "source": "CountessdeLo", "target": "Myriel", "value": 1 },
+                    { "source": "Geborand", "target": "Myriel", "value": 1 },
+                    { "source": "Champtercier", "target": "Myriel", "value": 1 },
+                    { "source": "Cravatte", "target": "Myriel", "value": 1 },
+                    { "source": "Count", "target": "Myriel", "value": 2 },
+                    { "source": "OldMan", "target": "Myriel", "value": 1 },
+                    { "source": "Valjean", "target": "Labarre", "value": 1 },
+                    { "source": "Valjean", "target": "Mme.Magloire", "value": 3 },
+                    { "source": "Valjean", "target": "Mlle.Baptistine", "value": 3 },
+                    { "source": "Valjean", "target": "Myriel", "value": 5 },
+                    { "source": "Marguerite", "target": "Valjean", "value": 1 },
+                    { "source": "Mme.deR", "target": "Valjean", "value": 1 },
+                    { "source": "Isabeau", "target": "Valjean", "value": 1 },
+                    { "source": "Gervais", "target": "Valjean", "value": 1 },
+                    { "source": "Listolier", "target": "Tholomyes", "value": 4 },
+                    { "source": "Fameuil", "target": "Tholomyes", "value": 4 },
+                    { "source": "Fameuil", "target": "Listolier", "value": 4 },
+                    { "source": "Blacheville", "target": "Tholomyes", "value": 4 },
+                    { "source": "Blacheville", "target": "Listolier", "value": 4 },
+                    { "source": "Blacheville", "target": "Fameuil", "value": 4 },
+                    { "source": "Favourite", "target": "Tholomyes", "value": 3 },
+                    { "source": "Favourite", "target": "Listolier", "value": 3 },
+                    { "source": "Favourite", "target": "Fameuil", "value": 3 },
+                    { "source": "Favourite", "target": "Blacheville", "value": 4 },
+                    { "source": "Dahlia", "target": "Tholomyes", "value": 3 },
+                    { "source": "Dahlia", "target": "Listolier", "value": 3 },
+                    { "source": "Dahlia", "target": "Fameuil", "value": 3 },
+                    { "source": "Dahlia", "target": "Blacheville", "value": 3 },
+                    { "source": "Dahlia", "target": "Favourite", "value": 5 },
+                    { "source": "Zephine", "target": "Tholomyes", "value": 3 },
+                    { "source": "Zephine", "target": "Listolier", "value": 3 },
+                    { "source": "Zephine", "target": "Fameuil", "value": 3 },
+                    { "source": "Zephine", "target": "Blacheville", "value": 3 },
+                    { "source": "Zephine", "target": "Favourite", "value": 4 },
+                    { "source": "Zephine", "target": "Dahlia", "value": 4 },
+                    { "source": "Fantine", "target": "Tholomyes", "value": 3 },
+                    { "source": "Fantine", "target": "Listolier", "value": 3 },
+                    { "source": "Fantine", "target": "Fameuil", "value": 3 },
+                    { "source": "Fantine", "target": "Blacheville", "value": 3 },
+                    { "source": "Fantine", "target": "Favourite", "value": 4 },
+                    { "source": "Fantine", "target": "Dahlia", "value": 4 },
+                    { "source": "Fantine", "target": "Zephine", "value": 4 },
+                    { "source": "Fantine", "target": "Marguerite", "value": 2 },
+                    { "source": "Fantine", "target": "Valjean", "value": 9 },
+                    { "source": "Mme.Thenardier", "target": "Fantine", "value": 2 },
+                    { "source": "Mme.Thenardier", "target": "Valjean", "value": 7 },
+                    { "source": "Thenardier", "target": "Mme.Thenardier", "value": 13 },
+                    { "source": "Thenardier", "target": "Fantine", "value": 1 },
+                    { "source": "Thenardier", "target": "Valjean", "value": 12 },
+                    { "source": "Cosette", "target": "Mme.Thenardier", "value": 4 },
+                    { "source": "Cosette", "target": "Valjean", "value": 31 },
+                    { "source": "Cosette", "target": "Tholomyes", "value": 1 },
+                    { "source": "Cosette", "target": "Thenardier", "value": 1 },
+                    { "source": "Javert", "target": "Valjean", "value": 17 },
+                    { "source": "Javert", "target": "Fantine", "value": 5 },
+                    { "source": "Javert", "target": "Thenardier", "value": 5 },
+                    { "source": "Javert", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Javert", "target": "Cosette", "value": 1 },
+                    { "source": "Fauchelevent", "target": "Valjean", "value": 8 },
+                    { "source": "Fauchelevent", "target": "Javert", "value": 1 },
+                    { "source": "Bamatabois", "target": "Fantine", "value": 1 },
+                    { "source": "Bamatabois", "target": "Javert", "value": 1 },
+                    { "source": "Bamatabois", "target": "Valjean", "value": 2 },
+                    { "source": "Perpetue", "target": "Fantine", "value": 1 },
+                    { "source": "Simplice", "target": "Perpetue", "value": 2 },
+                    { "source": "Simplice", "target": "Valjean", "value": 3 },
+                    { "source": "Simplice", "target": "Fantine", "value": 2 },
+                    { "source": "Simplice", "target": "Javert", "value": 1 },
+                    { "source": "Scaufflaire", "target": "Valjean", "value": 1 },
+                    { "source": "Woman1", "target": "Valjean", "value": 2 },
+                    { "source": "Woman1", "target": "Javert", "value": 1 },
+                    { "source": "Judge", "target": "Valjean", "value": 3 },
+                    { "source": "Judge", "target": "Bamatabois", "value": 2 },
+                    { "source": "Champmathieu", "target": "Valjean", "value": 3 },
+                    { "source": "Champmathieu", "target": "Judge", "value": 3 },
+                    { "source": "Champmathieu", "target": "Bamatabois", "value": 2 },
+                    { "source": "Brevet", "target": "Judge", "value": 2 },
+                    { "source": "Brevet", "target": "Champmathieu", "value": 2 },
+                    { "source": "Brevet", "target": "Valjean", "value": 2 },
+                    { "source": "Brevet", "target": "Bamatabois", "value": 1 },
+                    { "source": "Chenildieu", "target": "Judge", "value": 2 },
+                    { "source": "Chenildieu", "target": "Champmathieu", "value": 2 },
+                    { "source": "Chenildieu", "target": "Brevet", "value": 2 },
+                    { "source": "Chenildieu", "target": "Valjean", "value": 2 },
+                    { "source": "Chenildieu", "target": "Bamatabois", "value": 1 },
+                    { "source": "Cochepaille", "target": "Judge", "value": 2 },
+                    { "source": "Cochepaille", "target": "Champmathieu", "value": 2 },
+                    { "source": "Cochepaille", "target": "Brevet", "value": 2 },
+                    { "source": "Cochepaille", "target": "Chenildieu", "value": 2 },
+                    { "source": "Cochepaille", "target": "Valjean", "value": 2 },
+                    { "source": "Cochepaille", "target": "Bamatabois", "value": 1 },
+                    { "source": "Pontmercy", "target": "Thenardier", "value": 1 },
+                    { "source": "Boulatruelle", "target": "Thenardier", "value": 1 },
+                    { "source": "Eponine", "target": "Mme.Thenardier", "value": 2 },
+                    { "source": "Eponine", "target": "Thenardier", "value": 3 },
+                    { "source": "Anzelma", "target": "Eponine", "value": 2 },
+                    { "source": "Anzelma", "target": "Thenardier", "value": 2 },
+                    { "source": "Anzelma", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Woman2", "target": "Valjean", "value": 3 },
+                    { "source": "Woman2", "target": "Cosette", "value": 1 },
+                    { "source": "Woman2", "target": "Javert", "value": 1 },
+                    { "source": "MotherInnocent", "target": "Fauchelevent", "value": 3 },
+                    { "source": "MotherInnocent", "target": "Valjean", "value": 1 },
+                    { "source": "Gribier", "target": "Fauchelevent", "value": 2 },
+                    { "source": "Mme.Burgon", "target": "Jondrette", "value": 1 },
+                    { "source": "Gavroche", "target": "Mme.Burgon", "value": 2 },
+                    { "source": "Gavroche", "target": "Thenardier", "value": 1 },
+                    { "source": "Gavroche", "target": "Javert", "value": 1 },
+                    { "source": "Gavroche", "target": "Valjean", "value": 1 },
+                    { "source": "Gillenormand", "target": "Cosette", "value": 3 },
+                    { "source": "Gillenormand", "target": "Valjean", "value": 2 },
+                    { "source": "Magnon", "target": "Gillenormand", "value": 1 },
+                    { "source": "Magnon", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Mlle.Gillenormand", "target": "Gillenormand", "value": 9 },
+                    { "source": "Mlle.Gillenormand", "target": "Cosette", "value": 2 },
+                    { "source": "Mlle.Gillenormand", "target": "Valjean", "value": 2 },
+                    { "source": "Mme.Pontmercy", "target": "Mlle.Gillenormand", "value": 1 },
+                    { "source": "Mme.Pontmercy", "target": "Pontmercy", "value": 1 },
+                    { "source": "Mlle.Vaubois", "target": "Mlle.Gillenormand", "value": 1 },
+                    { "source": "Lt.Gillenormand", "target": "Mlle.Gillenormand", "value": 2 },
+                    { "source": "Lt.Gillenormand", "target": "Gillenormand", "value": 1 },
+                    { "source": "Lt.Gillenormand", "target": "Cosette", "value": 1 },
+                    { "source": "Marius", "target": "Mlle.Gillenormand", "value": 6 },
+                    { "source": "Marius", "target": "Gillenormand", "value": 12 },
+                    { "source": "Marius", "target": "Pontmercy", "value": 1 },
+                    { "source": "Marius", "target": "Lt.Gillenormand", "value": 1 },
+                    { "source": "Marius", "target": "Cosette", "value": 21 },
+                    { "source": "Marius", "target": "Valjean", "value": 19 },
+                    { "source": "Marius", "target": "Tholomyes", "value": 1 },
+                    { "source": "Marius", "target": "Thenardier", "value": 2 },
+                    { "source": "Marius", "target": "Eponine", "value": 5 },
+                    { "source": "Marius", "target": "Gavroche", "value": 4 },
+                    { "source": "BaronessT", "target": "Gillenormand", "value": 1 },
+                    { "source": "BaronessT", "target": "Marius", "value": 1 },
+                    { "source": "Mabeuf", "target": "Marius", "value": 1 },
+                    { "source": "Mabeuf", "target": "Eponine", "value": 1 },
+                    { "source": "Mabeuf", "target": "Gavroche", "value": 1 },
+                    { "source": "Enjolras", "target": "Marius", "value": 7 },
+                    { "source": "Enjolras", "target": "Gavroche", "value": 7 },
+                    { "source": "Enjolras", "target": "Javert", "value": 6 },
+                    { "source": "Enjolras", "target": "Mabeuf", "value": 1 },
+                    { "source": "Enjolras", "target": "Valjean", "value": 4 },
+                    { "source": "Combeferre", "target": "Enjolras", "value": 15 },
+                    { "source": "Combeferre", "target": "Marius", "value": 5 },
+                    { "source": "Combeferre", "target": "Gavroche", "value": 6 },
+                    { "source": "Combeferre", "target": "Mabeuf", "value": 2 },
+                    { "source": "Prouvaire", "target": "Gavroche", "value": 1 },
+                    { "source": "Prouvaire", "target": "Enjolras", "value": 4 },
+                    { "source": "Prouvaire", "target": "Combeferre", "value": 2 },
+                    { "source": "Feuilly", "target": "Gavroche", "value": 2 },
+                    { "source": "Feuilly", "target": "Enjolras", "value": 6 },
+                    { "source": "Feuilly", "target": "Prouvaire", "value": 2 },
+                    { "source": "Feuilly", "target": "Combeferre", "value": 5 },
+                    { "source": "Feuilly", "target": "Mabeuf", "value": 1 },
+                    { "source": "Feuilly", "target": "Marius", "value": 1 },
+                    { "source": "Courfeyrac", "target": "Marius", "value": 9 },
+                    { "source": "Courfeyrac", "target": "Enjolras", "value": 17 },
+                    { "source": "Courfeyrac", "target": "Combeferre", "value": 13 },
+                    { "source": "Courfeyrac", "target": "Gavroche", "value": 7 },
+                    { "source": "Courfeyrac", "target": "Mabeuf", "value": 2 },
+                    { "source": "Courfeyrac", "target": "Eponine", "value": 1 },
+                    { "source": "Courfeyrac", "target": "Feuilly", "value": 6 },
+                    { "source": "Courfeyrac", "target": "Prouvaire", "value": 3 },
+                    { "source": "Bahorel", "target": "Combeferre", "value": 5 },
+                    { "source": "Bahorel", "target": "Gavroche", "value": 5 },
+                    { "source": "Bahorel", "target": "Courfeyrac", "value": 6 },
+                    { "source": "Bahorel", "target": "Mabeuf", "value": 2 },
+                    { "source": "Bahorel", "target": "Enjolras", "value": 4 },
+                    { "source": "Bahorel", "target": "Feuilly", "value": 3 },
+                    { "source": "Bahorel", "target": "Prouvaire", "value": 2 },
+                    { "source": "Bahorel", "target": "Marius", "value": 1 },
+                    { "source": "Bossuet", "target": "Marius", "value": 5 },
+                    { "source": "Bossuet", "target": "Courfeyrac", "value": 12 },
+                    { "source": "Bossuet", "target": "Gavroche", "value": 5 },
+                    { "source": "Bossuet", "target": "Bahorel", "value": 4 },
+                    { "source": "Bossuet", "target": "Enjolras", "value": 10 },
+                    { "source": "Bossuet", "target": "Feuilly", "value": 6 },
+                    { "source": "Bossuet", "target": "Prouvaire", "value": 2 },
+                    { "source": "Bossuet", "target": "Combeferre", "value": 9 },
+                    { "source": "Bossuet", "target": "Mabeuf", "value": 1 },
+                    { "source": "Bossuet", "target": "Valjean", "value": 1 },
+                    { "source": "Joly", "target": "Bahorel", "value": 5 },
+                    { "source": "Joly", "target": "Bossuet", "value": 7 },
+                    { "source": "Joly", "target": "Gavroche", "value": 3 },
+                    { "source": "Joly", "target": "Courfeyrac", "value": 5 },
+                    { "source": "Joly", "target": "Enjolras", "value": 5 },
+                    { "source": "Joly", "target": "Feuilly", "value": 5 },
+                    { "source": "Joly", "target": "Prouvaire", "value": 2 },
+                    { "source": "Joly", "target": "Combeferre", "value": 5 },
+                    { "source": "Joly", "target": "Mabeuf", "value": 1 },
+                    { "source": "Joly", "target": "Marius", "value": 2 },
+                    { "source": "Grantaire", "target": "Bossuet", "value": 3 },
+                    { "source": "Grantaire", "target": "Enjolras", "value": 3 },
+                    { "source": "Grantaire", "target": "Combeferre", "value": 1 },
+                    { "source": "Grantaire", "target": "Courfeyrac", "value": 2 },
+                    { "source": "Grantaire", "target": "Joly", "value": 2 },
+                    { "source": "Grantaire", "target": "Gavroche", "value": 1 },
+                    { "source": "Grantaire", "target": "Bahorel", "value": 1 },
+                    { "source": "Grantaire", "target": "Feuilly", "value": 1 },
+                    { "source": "Grantaire", "target": "Prouvaire", "value": 1 },
+                    { "source": "MotherPlutarch", "target": "Mabeuf", "value": 3 },
+                    { "source": "Gueulemer", "target": "Thenardier", "value": 5 },
+                    { "source": "Gueulemer", "target": "Valjean", "value": 1 },
+                    { "source": "Gueulemer", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Gueulemer", "target": "Javert", "value": 1 },
+                    { "source": "Gueulemer", "target": "Gavroche", "value": 1 },
+                    { "source": "Gueulemer", "target": "Eponine", "value": 1 },
+                    { "source": "Babet", "target": "Thenardier", "value": 6 },
+                    { "source": "Babet", "target": "Gueulemer", "value": 6 },
+                    { "source": "Babet", "target": "Valjean", "value": 1 },
+                    { "source": "Babet", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Babet", "target": "Javert", "value": 2 },
+                    { "source": "Babet", "target": "Gavroche", "value": 1 },
+                    { "source": "Babet", "target": "Eponine", "value": 1 },
+                    { "source": "Claquesous", "target": "Thenardier", "value": 4 },
+                    { "source": "Claquesous", "target": "Babet", "value": 4 },
+                    { "source": "Claquesous", "target": "Gueulemer", "value": 4 },
+                    { "source": "Claquesous", "target": "Valjean", "value": 1 },
+                    { "source": "Claquesous", "target": "Mme.Thenardier", "value": 1 },
+                    { "source": "Claquesous", "target": "Javert", "value": 1 },
+                    { "source": "Claquesous", "target": "Eponine", "value": 1 },
+                    { "source": "Claquesous", "target": "Enjolras", "value": 1 },
+                    { "source": "Montparnasse", "target": "Javert", "value": 1 },
+                    { "source": "Montparnasse", "target": "Babet", "value": 2 },
+                    { "source": "Montparnasse", "target": "Gueulemer", "value": 2 },
+                    { "source": "Montparnasse", "target": "Claquesous", "value": 2 },
+                    { "source": "Montparnasse", "target": "Valjean", "value": 1 },
+                    { "source": "Montparnasse", "target": "Gavroche", "value": 1 },
+                    { "source": "Montparnasse", "target": "Eponine", "value": 1 },
+                    { "source": "Montparnasse", "target": "Thenardier", "value": 1 },
+                    { "source": "Toussaint", "target": "Cosette", "value": 2 },
+                    { "source": "Toussaint", "target": "Javert", "value": 1 },
+                    { "source": "Toussaint", "target": "Valjean", "value": 1 },
+                    { "source": "Child1", "target": "Gavroche", "value": 2 },
+                    { "source": "Child2", "target": "Gavroche", "value": 2 },
+                    { "source": "Child2", "target": "Child1", "value": 3 },
+                    { "source": "Brujon", "target": "Babet", "value": 3 },
+                    { "source": "Brujon", "target": "Gueulemer", "value": 3 },
+                    { "source": "Brujon", "target": "Thenardier", "value": 3 },
+                    { "source": "Brujon", "target": "Gavroche", "value": 1 },
+                    { "source": "Brujon", "target": "Eponine", "value": 1 },
+                    { "source": "Brujon", "target": "Claquesous", "value": 1 },
+                    { "source": "Brujon", "target": "Montparnasse", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Bossuet", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Joly", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Grantaire", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Bahorel", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Courfeyrac", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Gavroche", "value": 1 },
+                    { "source": "Mme.Hucheloup", "target": "Enjolras", "value": 1 }
+                ]
+            },
+            messages: "数据获取成功！"
+        }
+        let json = Object.prototype.toString.call(rps["result"]) == "[object String]" ? JSON.parse(rps["result"]) : rps["result"];
         graphInit(json);
     }
 });
 
 //绘图初始化
-function graphInit(json){
-    let vis=_vis();//创建svg视图
-    let force=_force(); //力导向图布局
-    let exportPng=_exportPng();//导出图片
-    function update(){
-       //转换数据
-       force.nodes(json["nodes"]);
-       force.force("link").links(json["links"]);
-       //生成节点连接线
-       let link=_link(json,vis);
-       let node=_node(json,vis);
-       let linetext=_linetext(json,vis);
-       let bindEvent=_bindEvent(json,update,vis,force,node,link);
-       let bindLinkAndNodeEvent=_bindLinkAndNodeEvent(json,update,vis,node,link);
-      // node.call(_nodeDrag(force));//绑定拖拽
-       force.alphaTarget(.1);
-       force.restart();
-       force.on('tick',()=>(_tick(link,node,linetext)))
+function graphInit(json) {
+    let vis = _vis(); //创建svg视图
+    let force = _force(); //力导向图布局
+    let exportPng = _exportPng(); //导出图片
+    function update() {
+        //转换数据
+        force.nodes(json["nodes"]);
+        force.force("link").links(json["links"]);
+        //生成节点连接线
+        let link = _link(json, vis);
+        let node = _node(json, vis);
+        let linetext = _linetext(json, vis);
+        let bindEvent = _bindEvent(json, update, vis, force, node, link);
+        let bindLinkAndNodeEvent = _bindLinkAndNodeEvent(json, update, vis, node, link);
+        // node.call(_nodeDrag(force));//绑定拖拽
+        force.alphaTarget(.1);
+        force.restart();
+        force.on('tick', () => (_tick(link, node, linetext)))
     }
 
     update(json);
-    util.autoZoom(json);//自动缩放
+    util.autoZoom(json); //自动缩放
 }
-
-
-
-
-
-
-
-
-
