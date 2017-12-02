@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "69cc89df5264d0456b1c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0cd30bafbf4228d506d2"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -893,11 +893,29 @@ exports.default = function (json, update, vis, force, node, link) {
                 if (mousedownNode) {
                     mouseupNode = d;
                     if (mouseupNode == mousedownNode) {
-                        mousedownNode = null;mouseupNode = null;return;
+                        mousedownNode = null;
+                        mouseupNode = null;return;
                     }
                     var _link = { source: mousedownNode, target: mouseupNode };
-                    json.links.push(_link);
-                    update(json);
+                    var hasLink = json.links.findIndex(function (linkItem) {
+                        return linkItem.source.id == mousedownNode.id && linkItem.target.id == mouseupNode.id;
+                    }) > -1;
+                    var hasOppositeLink = json.links.findIndex(function (linkItem) {
+                        return linkItem.source.id == mouseupNode.id && linkItem.target.id == mousedownNode.id;
+                    }) > -1;
+                    if (!hasLink) {
+                        //如果是反向边 则合并为一条双向边  
+                        if (hasOppositeLink) {
+                            json.links.forEach(function (linkItem) {
+                                linkItem.source.id == mouseupNode.id && linkItem.target.id == mousedownNode.id && (linkItem["isTwoWay"] = true);
+                            });
+                        } else {
+                            json.links.push(_link);
+                        }
+                        update(json);
+                    } else {
+                        _util2.default.tip("已经有连线了，不能重复添加！");
+                    }
                 }
             });
             d3.select(".graph-area").on("mousedown.add-link", function () {
@@ -1091,8 +1109,10 @@ exports.default = function (json, vis) {
     link.exit().remove();
     link = link.enter().append("svg:line").lower().attr("class", "link").merge(link).attr("id", function (d) {
         return "link-" + d["source"]["index"] + "_" + d["target"]["index"];
+    }).attr("marker-start", function (d) {
+        return d.source.index === d.target.index ? false : d["isTwoWay"] ? "url(#start-arrow)" : "";
     }).attr("marker-end", function (d) {
-        return d.source.index === d.target.index ? false : "url(#end)";
+        return d.source.index === d.target.index ? false : "url(#end-arrow)";
     }).attr("stroke", "#5bc0de").attr("stroke-width", 0.7).attr("fill", "none");
     return link;
 };
@@ -1268,9 +1288,15 @@ exports.default = function () {
 
     var vis = d3.select('.graph-area').append("svg:svg").attr("id", "J_SvgView").attr("width", width).attr("height", height).call(zoom).on("dblclick.zoom", null).append("svg:g").attr('class', "all").attr("data-width", width).attr("data-height", height);
 
-    var arrow = vis.append("svg:defs").selectAll("marker").data(["end"]).enter().append("svg:marker").attr("id", function (d) {
+    var arrow = vis.append("svg:defs").selectAll("marker");
+
+    arrow.data(["start-arrow"]).enter().append("svg:marker").attr("id", function (d) {
         return d;
-    }).attr('class', 'arrow').attr("viewBox", "0 -5 10 10").attr("refX", 17).attr("refY", 1).attr("markerWidth", 10).attr("markerHeight", 16).attr("markerUnits", "userSpaceOnUse").attr("orient", "auto").append("svg:path").attr("d", "M0,-5L10,0L0,5").attr('fill', '#666');
+    }).attr('class', 'arrow').attr("viewBox", "0 -5 10 10").attr("refX", -7).attr("refY", 0).attr("markerWidth", 10).attr("markerHeight", 16).attr("markerUnits", "userSpaceOnUse").attr("orient", "auto").append("svg:path").attr("d", "M0,0L10,5L10,-5").attr('fill', '#666');
+
+    arrow.data(["end-arrow"]).enter().append("svg:marker").attr("id", function (d) {
+        return d;
+    }).attr('class', 'arrow').attr("viewBox", "0 -5 10 10").attr("refX", 17).attr("refY", 0).attr("markerWidth", 10).attr("markerHeight", 16).attr("markerUnits", "userSpaceOnUse").attr("orient", "auto").append("svg:path").attr("d", "M0,-5L10,0L0,5").attr('fill', '#666');
 
     return vis;
 };
