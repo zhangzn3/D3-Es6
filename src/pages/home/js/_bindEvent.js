@@ -28,8 +28,7 @@ export default function(json, update, vis, force, node, link) {
 
         //按钮状态切换
         $(this).addClass('btn-primary selected').siblings().removeClass("btn-primary selected");
-    })
-
+    });
 
     //添加节点
     d3.select('#J_AddNode').on("click.add-node", function() {
@@ -37,23 +36,20 @@ export default function(json, update, vis, force, node, link) {
         d3.select('.graph-area').on('click.add-node-ev', function() {
             let { translate, scale } = util.getTranslateAndScale();
             let [x, y] = d3.mouse(this);
-            let newNodeId = +new Date()
+            let newNodeId = +new Date();
             let newNode = { "id": newNodeId, "group": [], isNew: true };
             json.nodes.push(newNode);
             update(json);
             let [tx, ty] = [x / scale - +translate[0] / scale, y / scale - +translate[1] / scale];
             d3.select("g#node-" + newNodeId).attr("transform", `translate(${tx},${ty})`)
                 .datum(Object.assign(d3.select("g#node-" + newNodeId).data()[0], { "x": tx, "y": ty }));
-            force.stop();
         });
     });
-
 
     //删除节点
     d3.select('#J_DelNode').on("click.del-node", function() {
         __delNode(json, update);
     });
-
 
     //拖拽添加连线
     d3.select('#J_AddLink').on("click.add-link", function() {
@@ -62,13 +58,13 @@ export default function(json, update, vis, force, node, link) {
                 mouseupNode = null;
             let dragLine = vis.append("line").attr("class", "drag-line");
             node.on("mousedown.add-link", function(d) {
-                    mousedownNode = d
+                    mousedownNode = d;
                     dragLine.attr("class", "drag-line")
                         .lower()
                         .attr("x1", d["x"])
                         .attr("y1", d["y"])
                         .attr("x2", d["x"])
-                        .attr("y2", d["y"])
+                        .attr("y2", d["y"]);
                     d3.event.stopPropagation();
                 })
                 .on("mouseup.add-link", function(d) {
@@ -94,7 +90,7 @@ export default function(json, update, vis, force, node, link) {
                             util.tip("已经有连线了，不能重复添加！")
                         }
                     }
-                })
+                });
             d3.select(".graph-area")
                 .on("mousedown.add-link", function() {
                     if (!mousedownNode) return;
@@ -123,6 +119,12 @@ export default function(json, update, vis, force, node, link) {
     d3.select('#J_DelLink').on("click.del-link", function() {
         __delLink(json, update);
     });
+
+    //切换为圆形布局
+    d3.select('#J_CircleLayout').on("click.change-layout", function() {
+        util.circleLayout(json);
+    });
+
 }
 
 

@@ -47,11 +47,48 @@ export default {
         let d = dialog({ content: msg }).show();
         let dTimer = setTimeout(() => { d.close().remove() }, 2000);
     },
+    //获取transform
     getTranslateAndScale() {
         let transform = $(".all").attr("transform");
         let matchArr = transform && /translate/.test(transform) && /scale/.test(transform) && transform.match(/translate\(([^\)]+)\)\s?scale\(([^\)]+)/);
-        let translate = matchArr && matchArr[1].split(",") || [0, 0]
+        let translate = matchArr && matchArr[1].split(",") || [0, 0];
         let scale = matchArr && matchArr[2] || 1;
         return {translate,scale}
+    },
+    //设置圆形布局
+    circleLayout(json){
+        if(json["nodes"].length){
+            let centerPoint = [$('.graph-area').width()/2, $('.graph-area').height()/2];
+            let radian  = 360/json.nodes.length*Math.PI/180;
+            let radius =json["nodes"].length*10;
+            let endCordinates = {};
+            json.nodes.forEach(function(nodeItem,nodeIdx){
+                endCordinates['x'+nodeIdx]=radius * Math.cos(radian*nodeIdx)+centerPoint[0];
+                endCordinates['y'+nodeIdx]=radius * Math.sin(radian*nodeIdx)+centerPoint[1];
+            });
+            initAnimate(endCordinates);
+            function initAnimate(endCordinates){
+                let circleLayoutTimer;
+                d3.selectAll(".node").each(function(nodeItem,nodeIdx){
+                    d3.select(this).transition().duration(700).ease(d3.easeCubicInOut).attr("transform",`translate(${endCordinates['x'+nodeIdx]},${endCordinates['y'+nodeIdx]})`)
+                });
+                d3.selectAll(".link").each(function(nodeItem,nodeIdx){
+                    d3.select(this).transition().duration(700).ease(d3.easeCubicInOut)
+                        .attr('x1', endCordinates['x'+nodeItem["source"]["index"]])
+                        .attr('y1', endCordinates['y'+nodeItem["source"]["index"]])
+                        .attr('x2', endCordinates['x'+nodeItem["target"]["index"]])
+                        .attr('y2', endCordinates['y'+nodeItem["target"]["index"]]);
+                });
+                circleLayoutTimer && clearTimeout(circleLayoutTimer);
+                circleLayoutTimer=setTimeout(function () {
+                    d3.selectAll(".node").each(function (nodeItem, nodeIdx) {
+                        nodeItem.x = endCordinates['x'+nodeIdx];
+                        nodeItem.y = endCordinates['y'+nodeIdx];
+                        nodeItem.fx = nodeItem.x;
+                        nodeItem.fy = nodeItem.y;
+                    });
+                }, 350);
+            }
+        }
     }
 }   

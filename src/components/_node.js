@@ -5,13 +5,13 @@ export default function(json, vis) {
     let groups = [...new Set(json.nodes.reduce((prev, cur) => (prev.concat(cur.group)), []))]
     groups.forEach((groupItem, groupIdx) => { groupMap[groupItem] = colors[groupIdx] });
     let node = vis.selectAll("g.node");
-    node = node.data(json["nodes"], d => (d["id"]))
+    node = node.data(json["nodes"], d => (d["id"]));
     node.exit().remove();
     node = node.enter()
         .append("svg:g")
         .attr("class", d=>(d["isNew"] ? "node new-node" : "node"))
         .attr("id", d => ("node-" + d["id"]))
-        .merge(node)
+        .merge(node);
         
     node.selectAll(".node-bg").remove();    
     node.selectAll(".node-icon").remove();
@@ -21,7 +21,7 @@ export default function(json, vis) {
     node.append('svg:circle')
         .attr("class","node-bg")
         .attr("r", "12px")
-        .attr("fill", "#5bc0de")
+        .attr("fill", "#5bc0de");
     node.append("svg:image")
         .attr("class", "node-icon")
         .attr("xlink:href", nodeIcon)

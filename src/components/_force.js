@@ -7,6 +7,5 @@ export default function(){
         .force("x", d3.forceX())
         .force("y", d3.forceY())
         .force("collide",d3.forceCollide().strength(0.2).iterations(5))
-   
 }
 
