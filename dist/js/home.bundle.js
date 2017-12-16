@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "13f7aaa1f3edb1863612"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c41296fab144da3ce26d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -804,28 +804,28 @@ exports.default = {
         return { translate: translate, scale: scale };
     },
 
+    //动画设置
+    initAnimate: function initAnimate(endCordinates) {
+        var circleLayoutTimer = void 0;
+        d3.selectAll(".node").each(function (nodeItem, nodeIdx) {
+            d3.select(this).transition().duration(700).ease(d3.easeCircleInOut).attr("transform", "translate(" + endCordinates['x' + nodeIdx] + "," + endCordinates['y' + nodeIdx] + ")");
+        });
+        d3.selectAll(".link").each(function (nodeItem, nodeIdx) {
+            d3.select(this).transition().duration(700).ease(d3.easeCircleInOut).attr('x1', endCordinates['x' + nodeItem["source"]["index"]]).attr('y1', endCordinates['y' + nodeItem["source"]["index"]]).attr('x2', endCordinates['x' + nodeItem["target"]["index"]]).attr('y2', endCordinates['y' + nodeItem["target"]["index"]]);
+        });
+        circleLayoutTimer && clearTimeout(circleLayoutTimer);
+        circleLayoutTimer = setTimeout(function () {
+            d3.selectAll(".node").each(function (nodeItem, nodeIdx) {
+                nodeItem.x = endCordinates['x' + nodeIdx];
+                nodeItem.y = endCordinates['y' + nodeIdx];
+                nodeItem.fx = nodeItem.x;
+                nodeItem.fy = nodeItem.y;
+            });
+        }, 350);
+    },
     //设置圆形布局
     circleLayout: function circleLayout(json) {
         if (json["nodes"].length) {
-            var initAnimate = function initAnimate(endCordinates) {
-                var circleLayoutTimer = void 0;
-                d3.selectAll(".node").each(function (nodeItem, nodeIdx) {
-                    d3.select(this).transition().duration(700).ease(d3.easeCubicInOut).attr("transform", "translate(" + endCordinates['x' + nodeIdx] + "," + endCordinates['y' + nodeIdx] + ")");
-                });
-                d3.selectAll(".link").each(function (nodeItem, nodeIdx) {
-                    d3.select(this).transition().duration(700).ease(d3.easeCubicInOut).attr('x1', endCordinates['x' + nodeItem["source"]["index"]]).attr('y1', endCordinates['y' + nodeItem["source"]["index"]]).attr('x2', endCordinates['x' + nodeItem["target"]["index"]]).attr('y2', endCordinates['y' + nodeItem["target"]["index"]]);
-                });
-                circleLayoutTimer && clearTimeout(circleLayoutTimer);
-                circleLayoutTimer = setTimeout(function () {
-                    d3.selectAll(".node").each(function (nodeItem, nodeIdx) {
-                        nodeItem.x = endCordinates['x' + nodeIdx];
-                        nodeItem.y = endCordinates['y' + nodeIdx];
-                        nodeItem.fx = nodeItem.x;
-                        nodeItem.fy = nodeItem.y;
-                    });
-                }, 350);
-            };
-
             var centerPoint = [$('.graph-area').width() / 2, $('.graph-area').height() / 2];
             var radian = 360 / json.nodes.length * Math.PI / 180;
             var radius = json["nodes"].length * 10;
@@ -834,7 +834,28 @@ exports.default = {
                 endCordinates['x' + nodeIdx] = radius * Math.cos(radian * nodeIdx) + centerPoint[0];
                 endCordinates['y' + nodeIdx] = radius * Math.sin(radian * nodeIdx) + centerPoint[1];
             });
-            initAnimate(endCordinates);
+            this.initAnimate(endCordinates);
+        }
+    },
+
+    //设置矩形布局
+    rectLayout: function rectLayout(json) {
+        if (json["nodes"].length) {
+            var endCordinates = {};
+            var sqr = Math.floor(Math.sqrt(json["nodes"].length));
+            var count4row = 0;
+            var row = 0;
+            d3.selectAll('.node').each(function (d, i) {
+                endCordinates['x' + i] = $('.graph-area').width() * 1 / 5 + count4row * ($('.graph-area').width() * 4 / 5 / sqr);
+                endCordinates['y' + i] = $('.graph-area').height() * 1 / 6 + row * ($('.graph-area').height() * 5 / 6 / (sqr + 2));
+                if (count4row < sqr - 1) {
+                    count4row++;
+                } else {
+                    count4row = 0;
+                    row++;
+                }
+            });
+            this.initAnimate(endCordinates);
         }
     }
 };
@@ -986,6 +1007,11 @@ exports.default = function (json, update, vis, force, node, link) {
     //切换为圆形布局
     d3.select('#J_CircleLayout').on("click.change-layout", function () {
         _util2.default.circleLayout(json);
+    });
+
+    //切换为矩形布局
+    d3.select('#J_RectLayout').on("click.change-layout", function () {
+        _util2.default.rectLayout(json);
     });
 };
 
@@ -1144,7 +1170,9 @@ exports.default = function (json, vis) {
 
     //直线
     var link = vis.selectAll("line.link");
-    link = link.data(json["links"]);
+    link = link.data(json["links"], function (d) {
+        return d["source"]["id"] + "_" + d["target"]["id"];
+    });
     link.exit().remove();
     link = link.enter().append("svg:line").lower().attr("class", "link").merge(link).attr("id", function (d) {
         return "link-" + d["source"]["index"] + "_" + d["target"]["index"];
@@ -1669,7 +1697,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //绑定节点和连接线操作事件
 
-
 //绘图数据获取 
 //导出图片模块
 //力导向模块
@@ -1706,14 +1733,13 @@ function graphInit(json) {
         var linetext = (0, _linetext3.default)(json, vis);
         var bindEvent = (0, _bindEvent3.default)(json, update, vis, force, node, link);
         var bindLinkAndNodeEvent = (0, _bindLinkAndNodeEvent3.default)(json, update, vis, node, link);
-        // node.call(_nodeDrag(force));//绑定拖拽
-        force.alphaTarget(.1);
-        force.restart();
+        //node.call(_nodeDrag(force));//绑定拖拽
         force.on('tick', function () {
             return (0, _tick3.default)(link, node, linetext);
         });
     }
-
+    force.alphaTarget(.1);
+    force.restart();
     update(json);
     _util2.default.autoZoom(json); //自动缩放
 }

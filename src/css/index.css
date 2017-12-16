@@ -6,27 +6,17 @@
 html,
 body {
     height: 100%;
-    /* background: #333url('../images/bj.jpg') background-size:100% 100%; */
-    background-image:-webkit-radial-gradient(ellipse farthest-corner at center top,#000d4d 0%,#000105 100%);
-    background-image:radial-gradient(ellipse farthest-corner at center top,#000d4d 0%,#000105 100%);
+     background: #0b12ad url('../images/bg.jpg'); background-size:100% 100%;
 }
 
-.hfc {
-    height: 100%
+.wrapper,.graph-area{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
 }
-
-@keyframes blink {
-    from 50%,
-    to {
-        opacity: 1;
-    }
-    25%,
-    75% {
-        opacity: 0;
-    }
-}
-
-.wrapper {}
 
 .wrapper .fn-toolbar {
     position: absolute;
@@ -38,11 +28,6 @@ body {
 .wrapper .graph-area {
     overflow: hidden;
 }
-
-.wrapper .graph-area .node.new-node {
-/*     animation: blink .5s 2 ease-in-out */
-}
-
 
 .wrapper .graph-area .node .node-bg {
     display: none;

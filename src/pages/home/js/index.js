@@ -13,8 +13,6 @@ import _exportPng from '../../../components/_exportPng.js'; //导出图片模块
 import _bindEvent from './_bindEvent.js'; //绑定工具栏操作事件
 import _bindLinkAndNodeEvent from './_bindLinkAndNodeEvent.js'; //绑定节点和连接线操作事件
 
-
-
 //绘图数据获取 
 API.getData().then(function(rps) {
     if (rps["success"] && rps["result"]) {
@@ -38,12 +36,11 @@ function graphInit(json) {
         let linetext = _linetext(json, vis);
         let bindEvent = _bindEvent(json, update, vis, force, node, link);
         let bindLinkAndNodeEvent = _bindLinkAndNodeEvent(json, update, vis, node, link);
-        // node.call(_nodeDrag(force));//绑定拖拽
-        force.alphaTarget(.1);
-        force.restart();
+        //node.call(_nodeDrag(force));//绑定拖拽
         force.on('tick', () => (_tick(link, node, linetext)))
     }
-
+    force.alphaTarget(.1);
+    force.restart();
     update(json);
     util.autoZoom(json); //自动缩放
 }

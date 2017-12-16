@@ -125,6 +125,11 @@ export default function(json, update, vis, force, node, link) {
         util.circleLayout(json);
     });
 
+    //切换为矩形布局
+    d3.select('#J_RectLayout').on("click.change-layout", function() {
+        util.rectLayout(json);
+    });
+
 }
 
 

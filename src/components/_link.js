@@ -15,7 +15,7 @@ export default function(json, vis) {
 
     //直线
     let link = vis.selectAll("line.link");
-    link = link.data(json["links"]);
+    link = link.data(json["links"],d=>(`${d["source"]["id"]}_${d["target"]["id"]}`));
     link.exit().remove();
     link = link.enter()
         .append("svg:line")
@@ -27,7 +27,7 @@ export default function(json, vis) {
         .attr("marker-end",d=>d.source.index===d.target.index ? false :"url(#end-arrow)")
         .attr("stroke", "#5bc0de")
         .attr("stroke-width",0.7)
-        .attr("fill","none")
+        .attr("fill","none");
     return link;
     
 }
